@@ -30,10 +30,11 @@ class Auth extends CI_Controller
         $email = $this->input->post('email');
         $password = $this->input->post('password');
 
-        $user = $this->db->select('user.id AS `user_id`,email,role,password,is_active')
+        $user = $this->db->select('user.id AS `user_id`,email,role,role_id,password,is_active')
             ->join('user_role', 'user_role.id=user.role_id')
             ->get_where('user', ['email' => $email])->row_array();
-
+        // var_dump($user);
+        // die;
         // jika usernya ada
         if ($user) {
             // jika usernya aktif
@@ -47,7 +48,7 @@ class Auth extends CI_Controller
                     ];
                     $this->session->set_userdata($data);
                     if ($user['role_id'] == 1) {
-                        redirect('dashboard');
+                        redirect('admin');
                     } else {
                         redirect('dashboard
                         ');
@@ -69,8 +70,8 @@ class Auth extends CI_Controller
     function coba()
     {
         $data = [
-            'name' => 'Diki Rahmad Sandi',
-            'email' => 'dikisandi2006@gmail.com',
+            'name' => 'Administrator',
+            'email' => 'admin@darmajaya.co.id',
             'image' => 'default.jpg',
             'password' => password_hash('123', PASSWORD_DEFAULT),
             'role_id' => 1,

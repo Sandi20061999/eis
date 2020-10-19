@@ -11,19 +11,19 @@
                             <div class="d-flex  justify-content-center mb-5">
                                 <h4>EIS</h4>
                             </div>
-                            <form class="user" method="post" action="<?= base_url('auth'); ?>">
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="email" name="email" placeholder="Enter Email Address..." value="<?= set_value('email'); ?>">
-                                    <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
-                                    <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Login
-                                </button>
-                            </form>
+                            <?php echo form_open('auth') ?>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="email" name="email" placeholder="Enter Email Address..." value="<?= set_value('email'); ?>">
+                                <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
+                                <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                Login
+                            </button>
+                            <?php echo form_close() ?>
                         </div>
                     </div>
                 </div>
