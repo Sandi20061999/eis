@@ -53,7 +53,9 @@
         "use strict";
         <?php
         if (isset($key) && isset($data) && isset($type)) {
-            echo morris_chart($key, $data, $type);
+            for ($i = 0; $i < count($type); $i++) {
+                echo morris_chart($key, $data, $type[$i], $i);
+            }
         } else {
             echo "";
         }

@@ -16,7 +16,7 @@ class User_access_menu_model extends CI_Model
      */
     function get_user_access_menu($id)
     {
-        return $this->db->get_where('user_access_sub_menu', array('id' => $id))->row_array();
+        return $this->db->get_where('user_access_menu', array('id' => $id))->row_array();
     }
 
     /*
@@ -24,6 +24,7 @@ class User_access_menu_model extends CI_Model
      */
     function get_all_user_access_menu($user_id)
     {
+        $this->db->select('*,user_menu.id as "menu_id"');
         $this->db->join('user_menu', 'user_menu.id=user_access_menu.menu_id');
         return $this->db->get_where('user_access_menu', array('user_id' => $user_id))->result_array();
     }
@@ -31,26 +32,26 @@ class User_access_menu_model extends CI_Model
     /*
      * function to add new user_access_sub_menu
      */
-    function add_user_access_sub_menu($params)
+    function add_user_access_menu($params)
     {
-        $this->db->insert('user_access_sub_menu', $params);
+        $this->db->insert('user_access_menu', $params);
         return $this->db->insert_id();
     }
 
     /*
-     * function to update user_access_sub_menu
+     * function to update user_access_menu
      */
-    function update_user_access_sub_menu($id, $params)
+    function update_user_access_menu($id, $params)
     {
         $this->db->where('id', $id);
-        return $this->db->update('user_access_sub_menu', $params);
+        return $this->db->update('user_access_menu', $params);
     }
 
     /*
-     * function to delete user_access_sub_menu
+     * function to delete user_access_menu
      */
-    function delete_user_access_sub_menu($id)
+    function delete_user_access_menu($id)
     {
-        return $this->db->delete('user_access_sub_menu', array('id' => $id));
+        return $this->db->delete('user_access_menu', array('id' => $id));
     }
 }
