@@ -15,6 +15,61 @@ class Core_system extends CI_Controller
         $data['subMenu'] = $this->User_access_sub_menu_model->get_all_user_access_sub_menu($this->session->userdata('user_id'));
         $this->load->view('layouts/header');
         $this->load->view('layouts/sidebar', $data);
+        $cd = [
+            //card properti 
+            //format  'properti' => 'nilai'
+            'title' => 'Ini Judul',
+            'width' => '9', // lebar 1 - 12 default 12
+            'nilai' => '100', // value 
+            'detail' => 'Ini Detail', // detail *optional
+            'icon' => 'fa-user', // icon fontawesomw fa fa-user
+            'color' => 'primary', // primary,danger,success,warning,red,blue,green.yellow,purple,white
+        ];
+        $cd1 = [
+            'title' => 'Ini Judul 2',
+            'width' => '3',
+            'nilai' => '50',
+            'detail' => 'Ini Detail 2',
+            'icon' => 'fa-user',
+            'color' => 'danger',
+        ];
+        $card['card'] = [card($cd), card($cd1)];
+        $this->load->view('sections/card', $card);
+        $ct =  json_decode('[
+            {
+                "npm": "1211059022",
+                "nama": "M. Ricko Novriant",
+                "jk": "Lk",
+                "tempatlahir": "",
+                "tgllahir": "1900-01-01 00:00:00",
+                "jenjang": "S1",
+                "id_jurusan": "0105",
+                "nm_jurusan": "Sistem Informasi",
+                "angkatan": "2012",
+                "tglmasuk": "2012-09-15 00:00:00",
+                "ct": "1"
+            },
+            {
+                "npm": "1211059019",
+                "nama": "Hartoyo",
+                "jk": "Lk",
+                "tempatlahir": "Tanjung Bintang",
+                "tgllahir": "1988-03-16 00:00:00",
+                "jenjang": "S1",
+                "id_jurusan": "0105",
+                "nm_jurusan": "Sistem Informasi",
+                "angkatan": "2012",
+                "tglmasuk": "2012-09-15 00:00:00",
+                "ct": "2"
+            }]', true);
+        // $dt = [
+        //     //fromat 'Judul' => [isi1,isi2,dst] isi fungsi helprt / tag html
+        //     'Home' => [card($cd)], //panggil helper card array bentuknya
+        //     'Dashboard' => [card($cd1), card($cd)], //array biar bisa beberapa konten di dalam 1 tab
+        //     'Profil' => [table_view($ct)],
+        // ];
+        // $tab['tab'] = tab($dt);
+        // $this->load->view('sections/tab', $tab);
         $getView = $this->Core_system_model->getView('core_system/index/' . $uid);
         $cfoo = array();
         $au = 0;
@@ -34,10 +89,12 @@ class Core_system extends CI_Controller
                 $this->load->view('sections/accordion', $acc);
             }
             if ($gV['type'] == 'morris-line-chart') {
+                $cl = ['0' => '#4d7cff', '1' => '#45fda5'];
+                $label = ['0' => 'Jumlah', '1' => 'Bukan'];
                 $key = [
                     'x' => 'bilangan',
-                    'y' => array('0' => 'Jumlah', '1' => 'Bukan'),
-                    'color' => array('0' => '#4d7cff', '1' => '#45fda5'),
+                    'y' => $label,
+                    'color' => $cl,
                 ];
 
                 $datacoba = [
@@ -62,12 +119,36 @@ class Core_system extends CI_Controller
                 $contents = ob_get_contents();
                 array_push($cfoo, $contents);
                 ob_end_clean();
-                $title = 'Grafik Jumlah Pendaftar Per Tahun Ajaran';
+                $cbu['title'] = 'Grafik Jumlah Pendaftar Per Tahun Ajaran';
                 $cbu['id'] = 'morris-line-chart' . $au;
+                $cbu['color'] = $cl;
+                $cbu['lable'] = $label;
                 $this->load->view('sections/chart', $cbu);
             }
             $au++;
         }
+        ob_start();
+        $tes = '$(function() {"use strict"; ';
+        $tes .= morris_chart($key, $datacoba, 'morris-line-chart', 100);
+        $tes .= '});';
+        echo $tes;
+        $cont = ob_get_contents();
+        array_push($cfoo, $cont);
+        ob_end_clean();
+
+        $tesc['title'] = 'Grafik Jumlah Pendaftar Per Tahun Ajaran';
+        $tesc['id'] = 'morris-line-chart' . 100;
+        $tesc['color'] = $cl;
+        $tesc['lable'] = $label;
+        $dt = [
+            //fromat 'Judul' => [isi1,isi2,dst] isi fungsi helprt / tag html
+            'Grafik' => [$tesc], //grafik
+            'Home' => [card($cd)], //panggil helper card array bentuknya
+            'Dashboard' => [card($cd1), table_view($ct)], //array biar bisa beberapa konten di dalam 1 tab
+        ];
+        $tab['tab'] = tab($dt);
+        $this->load->view('sections/tab', $tab);
+
         $val['javascript'] = $cfoo;
         $this->load->view('layouts/footer', $val);
     }
