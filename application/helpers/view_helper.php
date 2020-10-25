@@ -6,6 +6,7 @@
 // type = morris-donut-chart maka format key ['x'=>label,'y'=>array('0'=>'value')]
 function morris_chart($key, $data, $type, $n)
 {
+    // var_dump($data);
     $x = $key['x'];
     $ar = array();
     foreach ($data as $t) {
@@ -57,7 +58,7 @@ function morris_chart($key, $data, $type, $n)
         return "Morris.Area({element: 'extra-area-chart" . $n . "',data: " . $view . ",lineColors: " . $color . ",xkey: '" . $x . "',ykeys: " . $y . ",labels: " . $y . ",pointSize: 0,lineWidth: 0,resize: true,fillOpacity: 0.8,behaveLikeLine: true,gridLineColor: 'transparent',hideHover: 'auto'});";
     }
     if ($type == 'morris-area-chart') {
-        return "Morris.Area({element: 'morris-area-chart" . $n . "',data:" . $view . ",xkey: '" . $x . "',ykeys: " . $y . ",labels: " . $y . ",pointSize: 3,fillOpacity: 0,pointStrokeColors: " . $color . ",behaveLikeLine: true,gridLineColor: 'transparent',lineWidth: 3,hideHover: 'auto',lineColors: ['#7571F9', '#4d7cff', '#9097c4'],resize: true});";
+        return "Morris.Area({element: 'morris-area-chart" . $n . "',data:" . $view . ",xkey: '" . $x . "',ykeys: " . $y . ",labels: " . $y . ",pointSize: 3,fillOpacity: 0,pointStrokeColors: " . $color . ",behaveLikeLine: true,gridLineColor: 'transparent',lineWidth: 3,hideHover: 'auto',lineColors: ".$color.",resize: true});";
     }
     if ($type == 'morris-donut-chart') {
         return "Morris.Donut({element: 'morris-donut-chart" . $n . "',data: " . $view . ",resize: true,colors: " . $color . "});";
@@ -67,25 +68,19 @@ function morris_chart($key, $data, $type, $n)
     }
 }
 
-// format thn ajaran ['TA'=>array('2017/2018','2018/2019','2019/2020')]
-function accordion($Jurusan, $TA)
-{
-}
 
-function table_view($dat)
+function table_view($dat, $exc = [])
 {
-    $temp = '<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Data Table</h4>
+    $temp = '
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                             <tr>';
     foreach ($dat[0] as $i => $v) {
         if ($i != 'ct') {
-            $temp .= '<th>' . field_as($i) . '</th>';
+            if (!in_array($i, $exc)) {
+                $temp .= '<th>' . field_as($i) . '</th>';
+            }
         }
     }
     $temp .=
@@ -96,7 +91,9 @@ function table_view($dat)
         $temp .= '<tr>';
         foreach ($dat[0] as $i => $v) {
             if ($i != 'ct') {
-                $temp .= '<td>' . $t[$i] . '</td>';
+                if (!in_array($i, $exc)) {
+                    $temp .= '<td>' . $t[$i] . '</td>';
+                }
             }
         }
         $temp .= '</tr>';
@@ -106,60 +103,53 @@ function table_view($dat)
                             <tr>';
     foreach ($dat[0] as $i => $v) {
         if ($i != 'ct') {
-            $temp .= '<th>' . field_as($i) . '</th>';
+            if (!in_array($i, $exc)) {
+                $temp .= '<th>' . field_as($i) . '</th>';
+            }
         }
     }
     $temp .= '</tr>
                         </tfoot>
                     </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>';
+                </div>';
     return $temp;
 }
-function accordion_view($name, $dat, $by)
+function accordion_view($name, $dat, $by,$id)
 {
     $temp = '<div class="row">
     <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">' . $name . '</h4>
-                <p class="text-muted"><code></code>
-                </p>
-                <div id="accordion-one" class="accordion">';
+            <div id="accordion-one'.$id.'" class="accordion">
+            <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOneTop'.$id.'" aria-expanded="true" aria-controls="collapseOne"><i class="fa" aria-hidden="true"></i>' . $name . '
+                            </h5>
+                        </div>
+                        <div id="collapseOneTop'.$id.'" class="collapse" data-parent="#accordion-one'.$id.'">
+                            <div class="card-body">'; 
     $dump = [];
     $i = 0;
     foreach ($dat as $index => $x) {
         $dump[$x[$by]][$index] = $x;
     }
+    ksort($dump);
     foreach ($dump as $index => $x) {
-        $temp .= '<div class="card">
+        $temp .= ' <div id="accordion-one'.$id.$i.'" class="accordion">
+                    <div class="card">
                         <div class="card-header">
-                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne' . $i . '" aria-expanded="true" aria-controls="collapseOne"><i class="fa" aria-hidden="true"></i>' .
+                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne'.$id.$i.'" aria-expanded="true" aria-controls="collapseOne"><i class="fa" aria-hidden="true"></i>' .
             $index . '</h5>
                         </div>
-                        <div id="collapseOne' . $i . '" class="collapse" data-parent="#accordion-one">
-                            <div class="card-body">' . table_view(array_values($x)) . '</div>
+                        <div id="collapseOne'.$id.$i.'" class="collapse" data-parent="#accordion-one'.$id.$i.'">
+                            <div class="card-body">' . table_view(array_values($x), ['id_jurusan', 'kelurahan', 'nm_kecamatan', 'nm_kabupaten', 'nm_propinsi', 'nm_semester']) . '</div>
                         </div>
+                    </div>
                     </div>';
+                    
         $i++;
     }
-    // for ($i = 0; $i < count($dump); $i++) {
-    //     $temp .= '<div class="card">
-    //                     <div class="card-header">
-    //                         <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne' . $i . '" aria-expanded="true" aria-controls="collapseOne"><i class="fa" aria-hidden="true"></i>' .
-    //         $dump['2012/2013'][1]['ta'] . '</h5>
-    //                     </div>
-    //                     <div id="collapseOne' . $i . '" class="collapse" data-parent="#accordion-one">
-    //                         <div class="card-body"></div>
-    //                     </div>
-    //                 </div>';
-    // }
-
-
+    
     $temp .= '</div>
+            </div>
             </div>
         </div>
     </div>

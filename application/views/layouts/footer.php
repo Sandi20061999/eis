@@ -49,18 +49,12 @@
 <script src="<?= base_url() ?>/assets//plugins/flot/js/jquery.flot.init.js"></script>
 
 <script>
-    $(function() {
-        "use strict";
-        <?php
-        if (isset($key) && isset($data) && isset($type)) {
-            for ($i = 0; $i < count($type); $i++) {
-                echo morris_chart($key, $data, $type[$i], $i);
-            }
-        } else {
-            echo "";
-        }
-        ?>
-    });
+    <?php
+    // $i = 0;
+    foreach ($javascript as $j) {
+        echo $j;
+        // $i++;
+    } ?>
 </script>
 </body>
 

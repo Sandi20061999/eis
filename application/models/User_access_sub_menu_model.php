@@ -28,6 +28,13 @@ class User_access_sub_menu_model extends CI_Model
         $this->db->join('user_sub_menu', 'user_sub_menu.id=user_access_sub_menu.sub_menu_id');
         return $this->db->get_where('user_access_sub_menu', array('user_id' => $user_id, 'is_active' => 1))->result_array();
     }
+
+    function get_all_user_access_sub_menu_semua()
+    {
+        // $this->db->select('*,user_access_sub_menu.id as "id"');  
+        $this->db->join('user_sub_menu', 'user_sub_menu.id=user_access_sub_menu.sub_menu_id');
+        return $this->db->get_where('user_access_sub_menu', array('is_active' => 1))->result_array();
+    }
     
 
     /*

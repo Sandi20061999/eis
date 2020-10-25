@@ -1,0 +1,16 @@
+type: 
+- header            : - value
+
+- small card        : - label
+                    : - value
+                    : - icon
+                    : - keterangan
+
+- grafik            : - donout          : - 
+                    : - visit
+                    : - area chart
+                    : - line chart
+                    : - bar chart
+
+- accordion         : - 
+- table

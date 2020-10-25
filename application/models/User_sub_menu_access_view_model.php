@@ -24,6 +24,7 @@ class User_sub_menu_access_view_model extends CI_Model
      */
     function get_all_user_sub_menu_access_view($sub_menu_id)
     {
+        $this->db->select('*,user_sub_menu_access_view.id as "id"');  
         $this->db->join('user_view', 'user_view.id=user_sub_menu_access_view.view_id');
         return $this->db->get_where('user_sub_menu_access_view', array('sub_menu_id' => $sub_menu_id))->result_array();
     }

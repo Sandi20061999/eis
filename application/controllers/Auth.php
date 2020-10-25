@@ -41,17 +41,32 @@ class Auth extends CI_Controller
             if ($user['is_active'] == 1) {
                 // cek password
                 if (password_verify($password, $user['password'])) {
+                    if ($user['role'] == 'KaProdi SI') {
+                        $prodi_id = '0105';
+                    } elseif ($user['role'] == 'KaProdi TI') {
+                        $prodi_id = '0101';
+                    } elseif ($user['role'] == 'KaProdi SK') {
+                        $prodi_id = '0105';
+                    } elseif ($user['role'] == 'KaProdi MTI') {
+                        $prodi_id = '0105';
+                    } elseif ($user['role'] == 'KaProdi AK') {
+                        $prodi_id = '0212';
+                    } elseif ($user['role'] == 'KaProdi MA') {
+                        $prodi_id = '0105';
+                    } elseif ($user['role'] == 'KaProdi MM') {
+                        $prodi_id = '0105';
+                    }
                     $data = [
                         'email' => $user['email'],
                         'role' => $user['role'],
-                        'user_id' => $user['user_id']
+                        'user_id' => $user['user_id'],
+                        'prodi_id' => $prodi_id
                     ];
                     $this->session->set_userdata($data);
                     if ($user['role_id'] == 1) {
                         redirect('admin');
-                    } else {
-                        redirect('dashboard
-                        ');
+                    } elseif ($this->session->userdata('prodi_id') != null) {
+                        redirect('kaprodi/index');
                     }
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong password!</div>');
