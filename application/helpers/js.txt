@@ -1,0 +1,35 @@
+"id_jurusan": "0101",
+"nm_jurusan": "Teknik Informatika S1",
+
+"id_jurusan": "0102",              //////
+"nm_jurusan": "Teknik Komputer D3",   /////
+
+"id_jurusan": "0103",
+"nm_jurusan": "Manajemen Informatika D3",
+
+"id_jurusan": "0105",
+"nm_jurusan": "Sistem Informasi S1",
+
+"id_jurusan": "0106",
+"nm_jurusan": "Sistem Komputer S1",
+
+"id_jurusan": "0107",
+"nm_jurusan": "Desain Komunikasi Visual S1",
+
+"id_jurusan": "0121",
+"nm_jurusan": "Magister Teknik Informatika S2",
+
+"id_jurusan": "0211",
+"nm_jurusan": "Manajemen S1",
+
+"id_jurusan": "0214",
+"nm_jurusan": "Bisnis Digital S1",
+
+"id_jurusan": "0231",
+"nm_jurusan": "Magister Manajemen S2",
+
+"id_jurusan": "0212",
+"nm_jurusan": "Akuntansi S1",
+
+"id_jurusan": "0213",
+"nm_jurusan": "Akuntansi D3",

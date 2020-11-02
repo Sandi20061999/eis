@@ -1,5 +1,9 @@
 <?php
 
+use Jajo\JSONDB;
+
+use function PHPSTORM_META\type;
+
 class Core_system extends CI_Controller
 {
     function __construct()
@@ -11,144 +15,180 @@ class Core_system extends CI_Controller
     }
     function index($uid)
     {
-        $data['menu'] = $this->User_access_menu_model->get_all_user_access_menu($this->session->userdata('user_id'));
-        $data['subMenu'] = $this->User_access_sub_menu_model->get_all_user_access_sub_menu($this->session->userdata('user_id'));
+        $data['menu'] = $this->db->join('menu', 'menu.id=role_access_menu.menu_id')->get_where('role_access_menu', array('role_id' => $this->session->userdata('role_id')))->result_array();
+        $data['subMenu'] = $this->db->join('sub_menu', 'sub_menu.id=role_access_sub_menu.sub_menu_id')->get_where('role_access_sub_menu', array('role_id' => $this->session->userdata('role_id')))->result_array();
         $this->load->view('layouts/header');
         $this->load->view('layouts/sidebar', $data);
-        $cd = [
-            //card properti 
-            //format  'properti' => 'nilai'
-            'title' => 'Ini Judul',
-            'width' => '9', // lebar 1 - 12 default 12
-            'nilai' => '100', // value 
-            'detail' => 'Ini Detail', // detail *optional
-            'icon' => 'fa-user', // icon fontawesomw fa fa-user
-            'color' => 'primary', // primary,danger,success,warning,red,blue,green.yellow,purple,white
-        ];
-        $cd1 = [
-            'title' => 'Ini Judul 2',
-            'width' => '3',
-            'nilai' => '50',
-            'detail' => 'Ini Detail 2',
-            'icon' => 'fa-user',
-            'color' => 'danger',
-        ];
-        $card['card'] = [card($cd), card($cd1)];
-        $this->load->view('sections/card', $card);
-        $ct =  json_decode('[
-            {
-                "npm": "1211059022",
-                "nama": "M. Ricko Novriant",
-                "jk": "Lk",
-                "tempatlahir": "",
-                "tgllahir": "1900-01-01 00:00:00",
-                "jenjang": "S1",
-                "id_jurusan": "0105",
-                "nm_jurusan": "Sistem Informasi",
-                "angkatan": "2012",
-                "tglmasuk": "2012-09-15 00:00:00",
-                "ct": "1"
-            },
-            {
-                "npm": "1211059019",
-                "nama": "Hartoyo",
-                "jk": "Lk",
-                "tempatlahir": "Tanjung Bintang",
-                "tgllahir": "1988-03-16 00:00:00",
-                "jenjang": "S1",
-                "id_jurusan": "0105",
-                "nm_jurusan": "Sistem Informasi",
-                "angkatan": "2012",
-                "tglmasuk": "2012-09-15 00:00:00",
-                "ct": "2"
-            }]', true);
-        // $dt = [
-        //     //fromat 'Judul' => [isi1,isi2,dst] isi fungsi helprt / tag html
-        //     'Home' => [card($cd)], //panggil helper card array bentuknya
-        //     'Dashboard' => [card($cd1), card($cd)], //array biar bisa beberapa konten di dalam 1 tab
-        //     'Profil' => [table_view($ct)],
-        // ];
-        // $tab['tab'] = tab($dt);
-        // $this->load->view('sections/tab', $tab);
         $getView = $this->Core_system_model->getView('core_system/index/' . $uid);
         $cfoo = array();
         $au = 0;
         foreach ($getView as $gV) {
-            if ($gV['type'] == 'header') {
-                $hd['size'] = $gV['sizeText'];
-                $hd['title'] = $gV['headerTitle'];
-                $this->load->view('sections/header', $hd);
-            }
-            if ($gV['type'] == 'accordion-table') {
+            if ($gV['type'] == 'card') {
+                $fil = json_decode($gV['cardFilter'], TRUE);
                 if ($gV['jsonFile'] == null) {
                     $dataValue = $this->_api($gV['select'], $gV['view_name'], $gV['where'], $gV['limit'], $gV['order_by']);
+                    $json_db = new JSONDB($dataValue);
+                    $users = $json_db->select($fil['filter'])
+                        ->from()
+                        ->where($fil['where'], 'AND')
+                        ->get();
                 } else {
-                    $dataValue = $gV['jsonFile'];
+                    $json_db = new JSONDB($gV['jsonFile']);
+                    $users = $json_db->select($fil['filter'])
+                        ->from()
+                        ->where($fil['where'], 'AND')
+                        ->get();
                 }
-                $acc['accordion']  =  accordion_view($gV['accordionTableTitle'], $dataValue, $gV['accordionTablePer'], $au);
+                if ($fil['by'] == null) {
+                    $count = count($users);
+                } else {
+                    $goblok = [];
+                    foreach ($users as $us) {
+                        $goblok[] = $us[$fil['by']];
+                    }
+                    $count = rupiah(array_sum($goblok));
+                }
+                $cd = [
+                    'title' => $gV['cardTitle'],
+                    'width' => $gV['cardWidth'], // lebar 1 - 12 default 12
+                    'nilai' => $count, // value 
+                    'detail' => $gV['cardDetail'], // detail *optional
+                    'icon' => $gV['cardIcon'], // icon fontawesomw fa fa-user
+                    'color' => $gV['cardColor'], // primary,danger,success,warning,red,blue,green.yellow,purple,white
+                ];
+                $card['card'] = card($cd);
+                $this->load->view('sections/card', $card);
+            }
+            if ($gV['type'] == 'chart-parent') {
+                $cuk = $gV['chartChildrenId'];
+                $datasetf = [];
+                $labels = [];
+                foreach (json_decode($cuk, TRUE) as $c) {
+                    $children = $this->db->get_where('api', array('id' => $c))->row_array();
+                    if ($children['jsonFile'] == null) {
+                        $dataValue = $this->_api($gV['select'], $gV['view_name'], $gV['where'], $gV['limit'], $gV['order_by']);
+                    } else {
+                        $dataValue = $children['jsonFile'];
+                    }
+                    $fil = json_decode($gV['chartFilter'], TRUE);
+                    $json_db = new JSONDB($dataValue);
+                    if ($labels == null) {
+                        $array = $json_db->select($fil['filter'])
+                            ->from()
+                            ->where($fil['where'], 'AND')
+                            ->get();
+                        $tempArr = array_unique(array_column($array, $fil['filter']));
+                        $l = array_intersect_key($array, $tempArr);
+                        foreach ($l as $to) {
+                            array_push($labels, $to[$fil['filter']]);
+                        }
+                    }
+                    $dataset = [];
+                    sort($labels);
+                    foreach ($labels as $kuy) {
+                        $dot = $json_db->select('*')
+                            ->from()
+                            ->where(array_merge($fil['where'], [$fil['filter'] => $kuy]), 'AND')
+                            ->get();
+                        if ($fil['by'] == null) {
+                            $count = count($dot);
+                        } else {
+                            
+                            $goblok = [];
+                            foreach ($dot as $us) {
+                                $goblok[] = $us[$fil['by']];
+                            }
+                            $count =array_sum($goblok);
+                        }
+                        $jum = $count;
+                        array_push($dataset, $jum);
+                    }
+                    // var_dump($dataset);
+                    // die;
+                    $rand_color = '#' . substr(md5(mt_rand()), 0, 6);
+                    $tete = [
+                        'backgroundColor' => $rand_color,
+                        'borderColor' => $rand_color,
+                        'fill' => false,
+                        'label' => $children['name'],
+                        'data' => $dataset
+                    ];
+                    array_push($datasetf, $tete);
+                }
+                $data = [
+                    'labels' => $labels,
+                    'datasets' => $datasetf
+                ];
+                $options = [
+                    'title' => [
+                        'display' => true,
+                        'text' => $gV['chartTitle']
+                    ],
+                    'plugins' => [
+                        'datalabels' => [
+                            'backgroundColor' => 'white',
+                            'borderRadius' => 4,
+                            'color' => '#324cdd',
+                            'font' => [
+                                'weight' => 'bold'
+                            ],
+                            'formatter' => 'Math.round'
+                        ]
+                    ],
+                    'scales' => [
+                        'yAxes' => [
+                            [
+                                'ticks' => [
+                                    'beginAtZero' => true
+                                ]
+                            ]
+                        ]
+                    ]
+                ];
+                $test['chart'] = chart('test' . $rand_color, $gV['chartType'], $data, $options, $gV['chartWidth']);
+                $this->load->view('sections/chart', $test);
+            }
+            if ($gV['type'] == 'accordion-table') {
+                $filter = json_decode($gV['accordionTablePer'], TRUE);
+                if ($gV['jsonFile'] == null) {
+                    $dataValue = $this->_api($gV['select'], $gV['view_name'], $gV['where'], $gV['limit'], $gV['order_by']);
+                    $json_db = new JSONDB($dataValue);
+                    $users = $json_db->select('*')
+                        ->from()
+                        ->where($filter['where'], 'AND')
+                        ->get();
+                } else {
+                    $json_db = new JSONDB($gV['jsonFile']);
+                    $users = $json_db->select('*')
+                        ->from()
+                        ->where($filter['where'], 'AND')
+                        ->get();
+                }
+                $acc['accordion']  =  accordion_view($gV['accordionTableTitle'], $users, $filter['filter'], $gV['id']);
                 $this->load->view('sections/accordion', $acc);
             }
-            if ($gV['type'] == 'morris-line-chart') {
-                $cl = ['0' => '#4d7cff', '1' => '#45fda5'];
-                $label = ['0' => 'Jumlah', '1' => 'Bukan'];
-                $key = [
-                    'x' => 'bilangan',
-                    'y' => $label,
-                    'color' => $cl,
-                ];
-
-                $datacoba = [
-                    array('2010', '78', '56'),
-                    array('2011', '10', '6'),
-                    array('2012', '80', '56'),
-                    array('2013', '24', '70'),
-                    array('2014', '57', '56'),
-                    array('2015', '60', '67'),
-                    array('2016', '56', '89'),
-                    array('2017', '90', '90'),
-                    array('2018', '80', '34'),
-                    array('2019', '3', '56'),
-                    array('2020', '10', '90'),
-                ];
-
-                ob_start();
-                $cku = '$(function() {"use strict"; ';
-                $cku .= morris_chart($key, $datacoba, 'morris-line-chart', $au);
-                $cku .= '});';
-                echo $cku;
-                $contents = ob_get_contents();
-                array_push($cfoo, $contents);
-                ob_end_clean();
-                $cbu['title'] = 'Grafik Jumlah Pendaftar Per Tahun Ajaran';
-                $cbu['id'] = 'morris-line-chart' . $au;
-                $cbu['color'] = $cl;
-                $cbu['lable'] = $label;
-                $this->load->view('sections/chart', $cbu);
+            if ($gV['type'] == 'table') {
+                $filter = json_decode($gV['tableFilter'], TRUE);
+                if ($gV['jsonFile'] == null) {
+                    $dataValue = $this->_api($gV['select'], $gV['view_name'], $gV['where'], $gV['limit'], $gV['order_by']);
+                    $json_db = new JSONDB($dataValue);
+                    $users = $json_db->select('*')
+                        ->from()
+                        ->where($filter, 'AND')
+                        ->get();
+                } else {
+                    $json_db = new JSONDB($gV['jsonFile']);
+                    $users = $json_db->select('*')
+                        ->from()
+                        ->where($filter, 'AND')
+                        ->get();
+                }
+                $acc['title'] = $gV['tableTitle'];
+                $acc['table']  =  table_view($users);
+                $this->load->view('sections/table', $acc);
             }
             $au++;
         }
-        ob_start();
-        $tes = '$(function() {"use strict"; ';
-        $tes .= morris_chart($key, $datacoba, 'morris-line-chart', 100);
-        $tes .= '});';
-        echo $tes;
-        $cont = ob_get_contents();
-        array_push($cfoo, $cont);
-        ob_end_clean();
-
-        $tesc['title'] = 'Grafik Jumlah Pendaftar Per Tahun Ajaran';
-        $tesc['id'] = 'morris-line-chart' . 100;
-        $tesc['color'] = $cl;
-        $tesc['lable'] = $label;
-        $dt = [
-            //fromat 'Judul' => [isi1,isi2,dst] isi fungsi helprt / tag html
-            'Grafik' => [$tesc], //grafik
-            'Home' => [card($cd)], //panggil helper card array bentuknya
-            'Dashboard' => [card($cd1), table_view($ct)], //array biar bisa beberapa konten di dalam 1 tab
-        ];
-        $tab['tab'] = tab($dt);
-        $this->load->view('sections/tab', $tab);
-
         $val['javascript'] = $cfoo;
         $this->load->view('layouts/footer', $val);
     }
@@ -163,6 +203,6 @@ class Core_system extends CI_Controller
             "order_by" => $order_by
         ];
         $getmhs = $this->curl->simple_post(API_URL(), $datapost);
-        return json_decode($getmhs, true)['data'];
+        return json_decode($getmhs, true);
     }
 }

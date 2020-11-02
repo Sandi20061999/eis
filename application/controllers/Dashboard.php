@@ -10,9 +10,8 @@ class Dashboard extends CI_Controller
 
     function index()
     {
-        $data['menu'] = $this->User_access_menu_model->get_all_user_access_menu($this->session->userdata('user_id'));
-        $data['subMenu'] = $this->User_access_sub_menu_model->get_all_user_access_sub_menu($this->session->userdata('user_id'));
-
+        $data['menu'] = $this->db->join('menu', 'menu.id=role_access_menu.menu_id')->get_where('role_access_menu', array('role_id' => $this->session->userdata('role_id')))->result_array();
+        $data['subMenu'] = $this->db->join('sub_menu', 'sub_menu.id=role_access_sub_menu.sub_menu_id')->get_where('role_access_sub_menu', array('role_id' => $this->session->userdata('role_id')))->result_array();
         $this->load->view('layouts/header');
         $this->load->view('layouts/sidebar', $data);
         $this->load->view('sections/dashboard');

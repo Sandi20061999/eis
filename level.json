@@ -1,0 +1,72 @@
+{
+  "level": {
+    "kaprodi": {
+      "filter": {
+        "card": [
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
+          "kdta"
+        ],
+        "chart": [
+          "kdta",
+          "ta"
+        ],
+        
+        "table": [
+          "kdta",
+          "ta"
+        ],
+        "accordionTable": [
+          "kdta",
+          "ta"
+        ]
+      },
+      "required": {
+        "card": [
+          "id_jurusan"
+        ],
+        "chart": [
+          
+        ]
+      }
+    },
+    "keuangan": {
+      "filter": {
+        "card": [
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
+          "kdta"
+        ],
+        "chart": [
+          "kdta",
+          "ta"
+        ],
+        
+        "table": [
+          "kdta",
+          "ta"
+        ],
+        "accordionTable": [
+          "kdta",
+          "ta"
+        ]
+      }
+    }
+      
+      
+    ,
+    "dekan": [
+      
+    ],
+    "wakil_rektor": [
+      
+    ],
+    "rektor": [
+      
+    ]
+  }
+}

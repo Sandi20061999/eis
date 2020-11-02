@@ -64,7 +64,7 @@ function morris_chart($key, $data, $type, $n)
         return "Morris.Donut({element: 'morris-donut-chart" . $n . "',data: " . $view . ",resize: true,colors: " . $color . "});";
     }
     if ($type == 'morris-line-chart') {
-        return "let line = new Morris.Line({element: 'morris-line-chart" . $n . "',resize: true, data: " . $view . ",xkey: '" . $x . "',ykeys: " . $y . ",labels: " . $y . ",lineColors: " . $color . ",hideHover: false,});";
+        return "let line = new Morris.Line({element: 'morris-line-chart" . $n . "',resize: true, data: " . $view . ",xkey: '" . $x . "',ykeys: " . $y . ",labels: " . $y . ",lineColors: " . $color . ",hideHover: true,});";
     }
 }
 
@@ -116,15 +116,16 @@ function table_view($dat, $exc = [])
 }
 function accordion_view($name, $dat, $by, $id)
 {
-    $temp = '<div class="row mb-4">
-    <div class="col-lg-12">
-            <div id="accordion-one' . $id . '" class="accordion">
-            <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOneTop' . $id . '" aria-expanded="true" aria-controls="collapseOne"><i class="fa" aria-hidden="true"></i>' . $name . '
-                            </h5>
-                        </div>
-                        <div id="collapseOneTop' . $id . '" class="collapse" data-parent="#accordion-one' . $id . '">
+    $temp = '
+                <div class="col-md-12 my-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="accordion-one' . $id . '" class="accordion">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOneTop' . $id . '" aria-expanded="true" aria-controls="collapseOne"><i class="fa" aria-hidden="true"></i>' . $name . ' </h5>
+                                    </div>
+                                <div id="collapseOneTop' . $id . '" class="collapse" data-parent="#accordion-one' . $id . '">
                             <div class="card-body">';
     $dump = [];
     $i = 0;
@@ -133,8 +134,8 @@ function accordion_view($name, $dat, $by, $id)
     }
     ksort($dump);
     foreach ($dump as $index => $x) {
-        $temp .= ' <div id="accordion-one' . $id . $i . '" class="accordion">
-                    <div class="card">
+                    $temp .= ' <div id="accordion-one' . $id . $i . '" class="accordion">
+                            <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne' . $id . $i . '" aria-expanded="true" aria-controls="collapseOne"><i class="fa" aria-hidden="true"></i>' .
             $index . '</h5>
@@ -153,7 +154,8 @@ function accordion_view($name, $dat, $by, $id)
             </div>
         </div>
     </div>
-</div>';
+    </div>
+    </div>';
     return $temp;
 }
 function card($data)
@@ -166,10 +168,10 @@ function card($data)
     //     'width' => '1-12',
     //     'icon' => 'fa-user',
     // ]
-    $default = ['title' => 'Judul Tidak Di Set', 'color' => 'primary', 'width' => '12', 'nilai' => 'Tidak Ada Nilai', 'icon' => 'fa-window-close'];
+    $default = ['title' => 'Judul Tidak Di Set', 'color' => '#3f48cc', 'width' => '12', 'nilai' => 'Tidak Ada Nilai', 'icon' => 'fa-window-close'];
 
     $temp = '<div class="col-md-' . (isset($data['width']) ? $data['width'] : $default['width']) . '">
-    <div class="card bg-' . (isset($data['color']) ? $data['color'] : $default['color']) . '">
+    <div class="card" style="background-color:'.(isset($data['color']) ? $data['color'] : $default['color']) . '" ;>
         <div class="card-body">
             <h3 class="card-title text-white">' . (isset($data['title']) ? $data['title'] : $default['title']) . '</h3>
             <div class="d-inline-block">
@@ -210,7 +212,7 @@ function tab($data)
         if ($i == 0) {
             $temp .= '<div class="tab-pane fade show active" id="' . str_replace(' ', '_', $index) . '" role="tabpanel">
             <div class="p-t-15">
-                <h4>This is ' . $index . ' title</h4>';
+                <h4>This is ' . $index . ' title</h4> <div class="row">';
             foreach ($val as $content) {
                 if (isset($content['color'])) {
                     $temp .= tagchart($content['color'], $content['lable'], $content['id']);
@@ -218,12 +220,12 @@ function tab($data)
                     $temp .= $content;
                 }
             }
-            $temp .= '</div>
+            $temp .= '</div></div>
         </div>';
         } else {
             $temp .= ' <div class="tab-pane fade" id="' . str_replace(' ', '_', $index) . '">
         <div class="p-t-15">
-          <h4>This is ' . $index . ' title</h4>';
+          <h4>This is ' . $index . ' title</h4><div class="row">';
             foreach ($val as $content) {
                 if (isset($content['color'])) {
                     $temp .= tagchart($content['color'], $content['lable'], $content['id']);
@@ -231,7 +233,7 @@ function tab($data)
                     $temp .= $content;
                 }
             }
-            $temp .= '</div>
+            $temp .= '</div></div>
     </div>';
         }
         $i++;
@@ -246,9 +248,52 @@ function tagchart($color, $lable, $id)
     $tagchart = '<div class="flex-d flex-direction-row"></div>';
     for ($i = 0; count($color) > $i; $i++) {
 
-        $tagchart .= '<span class="badge" style="width: 10;background-color: ' . $color[$i] . '">-</span> ' . $lable[$i];
+        $tagchart .= '<span class="badge" style="width: 10;background-color: ' . $color[$i] . '">-</span> ' . $lable[$i] . '  ';
     }
     $tagchart .= '<h4 class=" card-title"></h4>
     <div id="' . $id . '"></div>';
     return $tagchart;
+}
+
+function headerAtas($title, $size)
+{
+    return '<div class="col-md-6">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <' . $size . ' class="card-title my-auto">' . $title . '</' . $size . '>
+            </div>
+        </div>
+    </div>
+</div>';
+}
+
+function chart($element, $type, $data, $options = null, $width = 12)
+{
+    $arr = [
+        'type' => $type,
+        'data' => $data,
+        'options' => $options
+    ];
+    $toString = json_encode($arr, TRUE);
+    return '<div class="col-md-' . $width . '">
+    <div class="card">
+    <div class="card-body">
+    <canvas id="' . $element . '"></canvas>
+    </div>
+    </div>
+    </div>
+        <script>
+            new Chart(
+                document.getElementById("' . $element . '").getContext("2d"),
+                ' . $toString . '
+            );
+        </script>';
+}
+
+function rupiah($angka){
+	
+	$hasil_rupiah = "Rp " . number_format($angka,2,',','.');
+	return $hasil_rupiah;
+ 
 }

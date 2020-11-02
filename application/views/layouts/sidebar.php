@@ -5,7 +5,7 @@
             <?php foreach ($menu as $m) : ?>
                 <li>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                       <span class="nav-text"><?= $m['menu']; ?></span>
+                        <span class="nav-text"><?= $m['menu']; ?></span>
                     </a>
                     <ul aria-expanded="false">
                         <?php foreach ($subMenu as $s) : ?>
@@ -24,3 +24,4 @@
 
 <div class="content-body">
     <div class="container-fluid pt-5">
+        <div class="row">

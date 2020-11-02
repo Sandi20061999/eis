@@ -13,4 +13,14 @@ type:
                     : - bar chart
 
 - accordion         : - 
-- table
+- table             
+
+
+
+LIBRARY TABEL  http://tablefilter.free.fr/
+
+
+- perbandingan grafik antar ps mirip google trand // buat helper
+- buat tabel filter
+- remove line di grafik
+- tambah line di grafik sesuai hak akses

@@ -1,0 +1,12 @@
+{
+  "filter": {
+    "card": [
+      "ta",
+      "id_jurusan",
+      "jenjang"
+    ],
+    "chart": [
+      
+    ]
+  }
+}
