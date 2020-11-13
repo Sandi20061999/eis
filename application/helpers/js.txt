@@ -1,23 +1,23 @@
 "id_jurusan": "0101",
-"nm_jurusan": "Teknik Informatika S1",
+"nm_jurusan": "Teknik Informatika S1", -
 
 "id_jurusan": "0102",              //////
-"nm_jurusan": "Teknik Komputer D3",   /////
+"nm_jurusan": "Teknik Komputer D3",   /////  -
 
 "id_jurusan": "0103",
-"nm_jurusan": "Manajemen Informatika D3",
+"nm_jurusan": "Manajemen Informatika D3",  -
 
 "id_jurusan": "0105",
-"nm_jurusan": "Sistem Informasi S1",
+"nm_jurusan": "Sistem Informasi S1", -
 
 "id_jurusan": "0106",
-"nm_jurusan": "Sistem Komputer S1",
+"nm_jurusan": "Sistem Komputer S1", -
 
 "id_jurusan": "0107",
-"nm_jurusan": "Desain Komunikasi Visual S1",
+"nm_jurusan": "Desain Komunikasi Visual S1", -
 
 "id_jurusan": "0121",
-"nm_jurusan": "Magister Teknik Informatika S2",
+"nm_jurusan": "Magister Teknik Informatika S2", -
 
 "id_jurusan": "0211",
 "nm_jurusan": "Manajemen S1",
@@ -33,3 +33,37 @@
 
 "id_jurusan": "0213",
 "nm_jurusan": "Akuntansi D3",
+
+
+note: 02/11/2020
+
+persentase jumlah
+range ipk per 0.25
+
+tombol pilih type chart //
+
+bimbingan PA per nama dosen//
+jumlah anak yng bimbingan PA per anak
+
+card pilih tahun yang mau ditampilkan
+
+rewrite keuangan ke biaya //
+
+card total biaya daftar ulang 
+
+warna di Sistem //
+
+perbaikan posisi
+
+keuangan per prodi
+
+total di bebas keuangan
+
+where id rekening belum tahu
+
+tabulasi accordion di keuangan
+
+title grafik diperbesar  //
+
+logo //
+

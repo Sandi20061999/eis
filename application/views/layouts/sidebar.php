@@ -5,7 +5,7 @@
             <?php foreach ($menu as $m) : ?>
                 <li>
                     <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <span class="nav-text"><?= $m['menu']; ?></span>
+                    <i class="<?= $m['icon']; ?> text-primary"></i><span class="nav-text"><?= $m['menu']; ?></span>
                     </a>
                     <ul aria-expanded="false">
                         <?php foreach ($subMenu as $s) : ?>

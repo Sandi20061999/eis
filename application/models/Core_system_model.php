@@ -9,7 +9,8 @@ class Core_system_model extends CI_Model
 
     function getView($uid)
     {
-        return $this->db->join('sub_menu', 'sub_menu.id=sub_menu_access_view.sub_menu_id')
+        return $this->db->select('*,view.id AS `viewid`')
+            ->join('sub_menu', 'sub_menu.id=sub_menu_access_view.sub_menu_id')
             ->join('view', 'view.id=sub_menu_access_view.view_id')
             ->join('api', 'api.id=view.api_id','left')
             ->order_by('sub_menu_access_view.by', 'ASC')

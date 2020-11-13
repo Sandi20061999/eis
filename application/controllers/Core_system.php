@@ -2,7 +2,7 @@
 
 use Jajo\JSONDB;
 
-use function PHPSTORM_META\type;
+ini_set('memory_limit', '-1');
 
 class Core_system extends CI_Controller
 {
@@ -25,6 +25,7 @@ class Core_system extends CI_Controller
         foreach ($getView as $gV) {
             if ($gV['type'] == 'card') {
                 $fil = json_decode($gV['cardFilter'], TRUE);
+                $labelku = [];
                 if ($gV['jsonFile'] == null) {
                     $dataValue = $this->_api($gV['select'], $gV['view_name'], $gV['where'], $gV['limit'], $gV['order_by']);
                     $json_db = new JSONDB($dataValue);
@@ -34,10 +35,21 @@ class Core_system extends CI_Controller
                         ->get();
                 } else {
                     $json_db = new JSONDB($gV['jsonFile']);
-                    $users = $json_db->select($fil['filter'])
+                    $users = $json_db->select('*')
                         ->from()
                         ->where($fil['where'], 'AND')
                         ->get();
+                }
+                $json_db = new JSONDB($gV['jsonFile']);
+                $totngen = $json_db->select($fil['filter'])
+                    ->from()
+                    ->get();
+                $tempArr = array_unique(array_column($totngen, $fil['filter']));
+                $l = array_intersect_key($totngen, $tempArr);
+                // var_dump($fil['filter']);
+                // die;
+                foreach ($l as $to) {
+                    array_push($labelku, $to[$fil['filter']] . '|' . $gV['viewid']);
                 }
                 if ($fil['by'] == null) {
                     $count = count($users);
@@ -56,13 +68,23 @@ class Core_system extends CI_Controller
                     'icon' => $gV['cardIcon'], // icon fontawesomw fa fa-user
                     'color' => $gV['cardColor'], // primary,danger,success,warning,red,blue,green.yellow,purple,white
                 ];
-                $card['card'] = card($cd);
+                $u = rand(0, 100);
+                ob_start();
+                echo card($cd, $u, $labelku);
+                $cardcusk[] = ob_get_contents();
+                ob_end_clean();
+                // $card['filku'] = $labelku;
+                $card['u'] = $u;
+                $card['width'] = $gV['cardWidth'];
+                $card['modal'] = modal($users, $u, $gV['cardTitle']);
                 $this->load->view('sections/card', $card);
             }
             if ($gV['type'] == 'chart-parent') {
                 $cuk = $gV['chartChildrenId'];
                 $datasetf = [];
                 $labels = [];
+                $rand_color = ['#3f48cc', '#009688', '#ff6d00', '#ffd600', '#ec0c20', '#263238', '#0091ea', '#673ab7', '#00c853', '#004d40'];
+                $colorrr = 0;
                 foreach (json_decode($cuk, TRUE) as $c) {
                     $children = $this->db->get_where('api', array('id' => $c))->row_array();
                     if ($children['jsonFile'] == null) {
@@ -85,6 +107,7 @@ class Core_system extends CI_Controller
                     }
                     $dataset = [];
                     sort($labels);
+
                     foreach ($labels as $kuy) {
                         $dot = $json_db->select('*')
                             ->from()
@@ -93,27 +116,27 @@ class Core_system extends CI_Controller
                         if ($fil['by'] == null) {
                             $count = count($dot);
                         } else {
-                            
+
                             $goblok = [];
                             foreach ($dot as $us) {
                                 $goblok[] = $us[$fil['by']];
                             }
-                            $count =array_sum($goblok);
+                            $count = array_sum($goblok);
                         }
                         $jum = $count;
                         array_push($dataset, $jum);
                     }
                     // var_dump($dataset);
                     // die;
-                    $rand_color = '#' . substr(md5(mt_rand()), 0, 6);
                     $tete = [
-                        'backgroundColor' => $rand_color,
-                        'borderColor' => $rand_color,
+                        'backgroundColor' => $rand_color[$colorrr],
+                        'borderColor' => $rand_color[$colorrr],
                         'fill' => false,
                         'label' => $children['name'],
                         'data' => $dataset
                     ];
                     array_push($datasetf, $tete);
+                    $colorrr++;
                 }
                 $data = [
                     'labels' => $labels,
@@ -122,7 +145,8 @@ class Core_system extends CI_Controller
                 $options = [
                     'title' => [
                         'display' => true,
-                        'text' => $gV['chartTitle']
+                        'text' => $gV['chartTitle'],
+                        'fontSize' => 18
                     ],
                     'plugins' => [
                         'datalabels' => [
@@ -145,25 +169,62 @@ class Core_system extends CI_Controller
                         ]
                     ]
                 ];
-                $test['chart'] = chart('test' . $rand_color, $gV['chartType'], $data, $options, $gV['chartWidth']);
+                // $dataPie = [
+                //     'labels' => $labels,
+                //     'datasets' => $datasetf
+                // ];
+                // $optionsPie = [
+                //     'title' => [
+                //         'display' => true,
+                //         'text' => $gV['chartTitle']
+                //     ],
+                //     'plugins' => [
+                //         'datalabels' => [
+                //             'backgroundColor' => 'white',
+                //             'borderRadius' => 4,
+                //             'color' => '#324cdd',
+                //             'font' => [
+                //                 'weight' => 'bold'
+                //             ],
+                //             'formatter' => 'Math.round'
+                //         ]
+                //     ],
+                //     'scales' => [
+                //         'yAxes' => [
+                //             [
+                //                 'ticks' => [
+                //                     'beginAtZero' => true
+                //                 ]
+                //             ]
+                //         ]
+                //     ]
+                // ];
+
+                $test['chart'] = chart('test' . str_replace('#', '1', $rand_color[2]), $gV['chartType'], $data, $options, $gV['chartWidth']);
                 $this->load->view('sections/chart', $test);
             }
             if ($gV['type'] == 'accordion-table') {
                 $filter = json_decode($gV['accordionTablePer'], TRUE);
+                if ($filter['where']['id_jurusan'] != null || empty($filter['where']['id_jurusan'])) {
+                    $wr = array();
+                } else {
+                    $wr = $filter['where'];
+                }
                 if ($gV['jsonFile'] == null) {
                     $dataValue = $this->_api($gV['select'], $gV['view_name'], $gV['where'], $gV['limit'], $gV['order_by']);
                     $json_db = new JSONDB($dataValue);
                     $users = $json_db->select('*')
                         ->from()
-                        ->where($filter['where'], 'AND')
+                        ->where($wr, 'AND')
                         ->get();
                 } else {
                     $json_db = new JSONDB($gV['jsonFile']);
                     $users = $json_db->select('*')
                         ->from()
-                        ->where($filter['where'], 'AND')
+                        ->where($wr, 'AND')
                         ->get();
                 }
+
                 $acc['accordion']  =  accordion_view($gV['accordionTableTitle'], $users, $filter['filter'], $gV['id']);
                 $this->load->view('sections/accordion', $acc);
             }
@@ -190,6 +251,7 @@ class Core_system extends CI_Controller
             $au++;
         }
         $val['javascript'] = $cfoo;
+        $val['ngentot'] = (isset($cardcusk) ? $cardcusk  : '');
         $this->load->view('layouts/footer', $val);
     }
 

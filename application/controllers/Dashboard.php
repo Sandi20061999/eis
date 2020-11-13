@@ -10,12 +10,8 @@ class Dashboard extends CI_Controller
 
     function index()
     {
-        $data['menu'] = $this->db->join('menu', 'menu.id=role_access_menu.menu_id')->get_where('role_access_menu', array('role_id' => $this->session->userdata('role_id')))->result_array();
-        $data['subMenu'] = $this->db->join('sub_menu', 'sub_menu.id=role_access_sub_menu.sub_menu_id')->get_where('role_access_sub_menu', array('role_id' => $this->session->userdata('role_id')))->result_array();
-        $this->load->view('layouts/header');
-        $this->load->view('layouts/sidebar', $data);
-        $this->load->view('sections/dashboard');
-        $this->load->view('layouts/footer');
+        $data['_view'] = 'dashboard';
+        $this->load->view('layouts_admin/main', $data);
     }
 }
     // function grafik_perbandingan()

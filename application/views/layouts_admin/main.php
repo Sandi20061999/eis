@@ -183,16 +183,16 @@
             var id = $(this).children(":selected").attr("id");
             switch (id) {
                 case 'chart':
-                    isi = '<div class="form-group"> <div class="col-md-6"> <label for="chartTitle" class="control-label">chart Title</label> <div class="form-group"> <input type="text" name="chartTitle" value="<?php echo $this->input->post('chartTitle'); ?>" class="form-control" id="chartTitle" /> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="chartWidth" class="control-label">chart Width</label> <div class="form-group"> <input type="number" max="12" name="chartWidth" value="<?php echo $this->input->post('chartWidth'); ?>" class="form-control" id="chartWidth" /> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="chartType" class="control-label"><span class="text-danger">*</span>chartType</label> <div class="form-group"> <select class="form-control" name="chartType" id="chartType" data-container=" body" data-live-search="true" data-hide-disabled="true" title="chartType"> <option value="">Pilih Type Chart</option> <option value="bar">Bar</option> <option value="line">Line</option> </select> <span class="text-danger"><?php echo form_error('chartType'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <label for="by" class="control-label"><span class="text-danger">*</span>by</label> <div class="form-group"> <select class="form-control" name="by" id="by" data-container=" body" data-live-search="true" data-hide-disabled="true" title="by"><option value="">Jumlah</option> <option value="total">Total</option>  </select> <span class="text-danger"><?php echo form_error('by'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <label for="filter" class="control-label"><span class="text-danger">*</span>Filter</label> <div class="form-group"> <select class="form-control" name="filter" id="filter" data-container=" body" data-live-search="true" data-hide-disabled="true" title="filter"> </select> <span class="text-danger"><?php echo form_error('filter'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <button class="btn btn-info btn-small btn-add-api-data" id="addapi" type="button">Tambah Data</button> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="api_id" class="control-label"><span class="text-danger">*</span>Api</label> <div class="form-group"> <select class="form-control" name="api_id[]" id="api_id00" data-container=" body" data-live-search="true" data-hide-disabled="true" title="api_id"> <?php foreach ($api as $a) {?> <?php $selected = ($a['name'] == $this->input->post('api')) ? ' selected="selected"' : "";?> <option id="<?= $a['id'] ?>" value="<?= $a['id'] ?>" <?= $selected ?>><?= $a['name']?> </option>; <?php } ?></select> <span class="text-danger"><?php echo form_error('api_id'); ?></span> </div> </div> </div>';
+                    isi = '<div class="form-group"> <div class="col-md-6"> <label for="chartTitle" class="control-label">chart Title</label> <div class="form-group"> <input type="text" name="chartTitle" value="<?php echo $this->input->post('chartTitle'); ?>" class="form-control" id="chartTitle" /> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="chartWidth" class="control-label">chart Width</label> <div class="form-group"> <input type="number" max="12" name="chartWidth" value="<?php echo $this->input->post('chartWidth'); ?>" class="form-control" id="chartWidth" /> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="chartType" class="control-label"><span class="text-danger">*</span>chartType</label> <div class="form-group"> <select class="form-control" name="chartType" id="chartType" data-container=" body" data-live-search="true" data-hide-disabled="true" title="chartType"> <option value="">Pilih Type Chart</option> <option value="bar">Bar</option> <option value="line">Line</option> </select> <span class="text-danger"><?php echo form_error('chartType'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <label for="by" class="control-label"><span class="text-danger">*</span>by</label> <div class="form-group"> <select class="form-control" name="by" id="by" data-container=" body" data-live-search="true" data-hide-disabled="true" title="by"><option value="">Jumlah</option> <option value="total">Total</option>  </select> <span class="text-danger"><?php echo form_error('by'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <label for="filter" class="control-label"><span class="text-danger">*</span>Filter</label> <div class="form-group"> <select class="form-control" name="filter" id="filter" data-container=" body" data-live-search="true" data-hide-disabled="true" title="filter"> </select> <span class="text-danger"><?php echo form_error('filter'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <button class="btn btn-info btn-small btn-add-api-data" id="addapi" type="button">Tambah Data</button> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="api_id" class="control-label"><span class="text-danger">*</span>Api</label> <div class="form-group"> <select class="form-control" name="api_id[]" id="api_id00" data-container=" body" data-live-search="true" data-hide-disabled="true" title="api_id"> <?php foreach ($api as $a) { ?> <?php $selected = ($a['name'] == $this->input->post('api')) ? ' selected="selected"' : ""; ?> <option id="<?= $a['id'] ?>" value="<?= $a['id'] ?>" <?= $selected ?>><?= $a['name'] ?> </option>; <?php } ?></select> <span class="text-danger"><?php echo form_error('api_id'); ?></span> </div> </div> </div>';
                     break;
                 case 'card':
-                    isi = '<div class="form-group"> <div class="col-md-6"> <label for="api_id" class="control-label"><span class="text-danger">*</span>api_id</label> <div class="form-group"> <select class="form-control" class="input_api" name="api_id" id="api_id" data-container=" body" data-live-search="true" data-hide-disabled="true" title="api_id"> <?php foreach ($api as $a) {?> <?php $selected = ($a['name'] == $this->input->post('api')) ? ' selected="selected"' : "";?> <option id="<?= $a['id'] ?>" value="<?= $a['id'] ?>" <?= $selected ?>><?= $a['name']?> </option>; <?php } ?> </select> <span class="text-danger"><?php echo form_error('api_id'); ?></span> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="by" class="control-label"><span class="text-danger">*</span>by</label> <div class="form-group"> <select class="form-control" name="by" id="by" data-container=" body" data-live-search="true" data-hide-disabled="true" title="by"><option value="">Jumlah</option> <option value="total">Total</option>  </select> <span class="text-danger"><?php echo form_error('by'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <label for="filter" class="control-label"><span class="text-danger">*</span>Filter</label> <div class="form-group"> <select class="form-control" name="filter" id="filter" data-container=" body" data-live-search="true" data-hide-disabled="true" title="filter"> </select> <span class="text-danger"><?php echo form_error('filter'); ?></span> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="fvalue" class="control-label"><span class="text-danger">*</span>Filter Value</label> <div class="form-group"> <select class="form-control" name="fvalue" id="fvalue" data-container=" body" data-live-search="true" data-hide-disabled="true" title="fvalue"> </select> <span class="text-danger"><?php echo form_error('fvalue'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <label for="cardTitle" class="control-label">Card Title</label> <div class="form-group"> <input type="text" name="cardTitle" value="<?php echo $this->input->post('cardTitle'); ?>" class="form-control" id="cardTitle" /> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="cardWidth" class="control-label">Card Width</label> <div class="form-group"> <input type="number" max="12" name="cardWidth" value="<?php echo $this->input->post('cardWidth'); ?>" class="form-control" id="cardWidth" /> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="cardDetail" class="control-label">Card Detail</label> <div class="form-group"> <input type="text" name="cardDetail" value="<?php echo $this->input->post('cardDetail'); ?>" class="form-control" id="cardDetail" /> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="cardIcon" class="control-label"><span class="text-danger">*</span>cardIcon</label> <div class="form-group"> <select class="form-control" name="cardIcon" id="cardIcon" data-container=" body" data-live-search="true" data-hide-disabled="true" title="cardIcon"> </select> <span class="text-danger"><?php echo form_error('cardIcon'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <label for="cardColor" class="control-label">Card Color</label> <div class="form-group"> <input type="color" name="cardColor" value="<?php echo $this->input->post('cardColor'); ?>" class="form-control" id="cardColor" /> </div> </div> </div>';
+                    isi = '<div class="form-group"> <div class="col-md-6"> <label for="api_id" class="control-label"><span class="text-danger">*</span>api_id</label> <div class="form-group"> <select class="form-control" class="input_api" name="api_id" id="api_id" data-container=" body" data-live-search="true" data-hide-disabled="true" title="api_id"> <?php foreach ($api as $a) { ?> <?php $selected = ($a['name'] == $this->input->post('api')) ? ' selected="selected"' : ""; ?> <option id="<?= $a['id'] ?>" value="<?= $a['id'] ?>" <?= $selected ?>><?= $a['name'] ?> </option>; <?php } ?> </select> <span class="text-danger"><?php echo form_error('api_id'); ?></span> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="by" class="control-label"><span class="text-danger">*</span>by</label> <div class="form-group"> <select class="form-control" name="by" id="by" data-container=" body" data-live-search="true" data-hide-disabled="true" title="by"><option value="">Jumlah</option> <option value="total">Total</option>  </select> <span class="text-danger"><?php echo form_error('by'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <label for="filter" class="control-label"><span class="text-danger">*</span>Filter</label> <div class="form-group"> <select class="form-control" name="filter" id="filter" data-container=" body" data-live-search="true" data-hide-disabled="true" title="filter"> </select> <span class="text-danger"><?php echo form_error('filter'); ?></span> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="fvalue" class="control-label"><span class="text-danger">*</span>Filter Value</label> <div class="form-group"> <select class="form-control" name="fvalue" id="fvalue" data-container=" body" data-live-search="true" data-hide-disabled="true" title="fvalue"> </select> <span class="text-danger"><?php echo form_error('fvalue'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <label for="cardTitle" class="control-label">Card Title</label> <div class="form-group"> <input type="text" name="cardTitle" value="<?php echo $this->input->post('cardTitle'); ?>" class="form-control" id="cardTitle" /> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="cardWidth" class="control-label">Card Width</label> <div class="form-group"> <input type="number" max="12" name="cardWidth" value="<?php echo $this->input->post('cardWidth'); ?>" class="form-control" id="cardWidth" /> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="cardDetail" class="control-label">Card Detail</label> <div class="form-group"> <input type="text" name="cardDetail" value="<?php echo $this->input->post('cardDetail'); ?>" class="form-control" id="cardDetail" /> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="cardIcon" class="control-label"><span class="text-danger">*</span>cardIcon</label> <div class="form-group"> <select class="form-control" name="cardIcon" id="cardIcon" data-container=" body" data-live-search="true" data-hide-disabled="true" title="cardIcon"> </select> <span class="text-danger"><?php echo form_error('cardIcon'); ?></span> </div> </div> </div><div class="form-group"> <div class="col-md-6"> <label for="cardColor" class="control-label">Card Color</label> <div class="form-group"> <input type="color" name="cardColor" value="<?php echo $this->input->post('cardColor'); ?>" class="form-control" id="cardColor" /> </div> </div> </div>';
                     break;
                 case 'accordionTable':
-                    isi = '<div class="form-group"> <div class="col-md-6"> <label for="api_id" class="control-label"><span class="text-danger">*</span>api_id</label> <div class="form-group"> <select class="form-control" class="input_api" name="api_id" id="api_id" data-container=" body" data-live-search="true" data-hide-disabled="true" title="api_id"> <?php foreach ($api as $a) {?> <?php $selected = ($a['name'] == $this->input->post('api')) ? ' selected="selected"' : "";?> <option id="<?= $a['id'] ?>" value="<?= $a['id'] ?>" <?= $selected ?>><?= $a['name']?> </option>; <?php } ?> </select> <span class="text-danger"><?php echo form_error('api_id'); ?></span> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="filter" class="control-label"><span class="text-danger">*</span>Filter</label> <div class="form-group"> <select class="form-control" name="filter" id="filter" data-container=" body" data-live-search="true" data-hide-disabled="true" title="filter"> </select> <span class="text-danger"><?php echo form_error('filter'); ?></span> </div> </div> </div> <div class="col-md-6"> <label for="accordionTitle" class="control-label">Accordion Title</label> <div class="form-group"> <input type="text" name="accordionTitle" value="<?php echo $this->input->post('accordionTitle'); ?>" class="form-control" id="accordionTitle" /> </div> </div> </div>';
+                    isi = '<div class="form-group"> <div class="col-md-6"> <label for="api_id" class="control-label"><span class="text-danger">*</span>api_id</label> <div class="form-group"> <select class="form-control" class="input_api" name="api_id" id="api_id" data-container=" body" data-live-search="true" data-hide-disabled="true" title="api_id"> <?php foreach ($api as $a) { ?> <?php $selected = ($a['name'] == $this->input->post('api')) ? ' selected="selected"' : ""; ?> <option id="<?= $a['id'] ?>" value="<?= $a['id'] ?>" <?= $selected ?>><?= $a['name'] ?> </option>; <?php } ?> </select> <span class="text-danger"><?php echo form_error('api_id'); ?></span> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="filter" class="control-label"><span class="text-danger">*</span>Filter</label> <div class="form-group"> <select class="form-control" name="filter" id="filter" data-container=" body" data-live-search="true" data-hide-disabled="true" title="filter"> </select> <span class="text-danger"><?php echo form_error('filter'); ?></span> </div> </div> </div> <div class="col-md-6"> <label for="accordionTitle" class="control-label">Accordion Title</label> <div class="form-group"> <input type="text" name="accordionTitle" value="<?php echo $this->input->post('accordionTitle'); ?>" class="form-control" id="accordionTitle" /> </div> </div> </div>';
                     break;
                 case 'table':
-                    isi = '<div class="form-group"> <div class="col-md-6"> <label for="api_id" class="control-label"><span class="text-danger">*</span>api_id</label> <div class="form-group"> <select class="form-control" class="input_api" name="api_id" id="api_id" data-container=" body" data-live-search="true" data-hide-disabled="true" title="api_id"> <?php foreach ($api as $a) {?> <?php $selected = ($a['name'] == $this->input->post('api')) ? ' selected="selected"' : "";?> <option id="<?= $a['id'] ?>" value="<?= $a['id'] ?>" <?= $selected ?>><?= $a['name']?> </option>; <?php } ?> </select> <span class="text-danger"><?php echo form_error('api_id'); ?></span> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="filter" class="control-label"><span class="text-danger">*</span>Filter</label> <div class="form-group"> <select class="form-control" name="filter" id="filter" data-container=" body" data-live-search="true" data-hide-disabled="true" title="filter"> </select> <span class="text-danger"><?php echo form_error('filter'); ?></span> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="fvalue" class="control-label"><span class="text-danger">*</span>Filter Value</label> <div class="form-group"> <select class="form-control" name="fvalue" id="fvalue" data-container=" body" data-live-search="true" data-hide-disabled="true" title="fvalue"> </select> <span class="text-danger"><?php echo form_error('fvalue'); ?></span> </div> </div> </div><div class="col-md-6"> <label for="tableTitle" class="control-label">Table Title</label> <div class="form-group"> <input type="text" name="tableTitle" value="<?php echo $this->input->post('tableTitle'); ?>" class="form-control" id="tableTitle" /> </div> </div> </div>';
+                    isi = '<div class="form-group"> <div class="col-md-6"> <label for="api_id" class="control-label"><span class="text-danger">*</span>api_id</label> <div class="form-group"> <select class="form-control" class="input_api" name="api_id" id="api_id" data-container=" body" data-live-search="true" data-hide-disabled="true" title="api_id"> <?php foreach ($api as $a) { ?> <?php $selected = ($a['name'] == $this->input->post('api')) ? ' selected="selected"' : ""; ?> <option id="<?= $a['id'] ?>" value="<?= $a['id'] ?>" <?= $selected ?>><?= $a['name'] ?> </option>; <?php } ?> </select> <span class="text-danger"><?php echo form_error('api_id'); ?></span> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="filter" class="control-label"><span class="text-danger">*</span>Filter</label> <div class="form-group"> <select class="form-control" name="filter" id="filter" data-container=" body" data-live-search="true" data-hide-disabled="true" title="filter"> </select> <span class="text-danger"><?php echo form_error('filter'); ?></span> </div> </div> </div> <div class="form-group"> <div class="col-md-6"> <label for="fvalue" class="control-label"><span class="text-danger">*</span>Filter Value</label> <div class="form-group"> <select class="form-control" name="fvalue" id="fvalue" data-container=" body" data-live-search="true" data-hide-disabled="true" title="fvalue"> </select> <span class="text-danger"><?php echo form_error('fvalue'); ?></span> </div> </div> </div><div class="col-md-6"> <label for="tableTitle" class="control-label">Table Title</label> <div class="form-group"> <input type="text" name="tableTitle" value="<?php echo $this->input->post('tableTitle'); ?>" class="form-control" id="tableTitle" /> </div> </div> </div>';
                     break;
                 default:
                     isi = '';
@@ -211,15 +211,15 @@
                 }
             });
             $(document).on('change', 'select[name="filter"]', function() {
-            $.ajax({
-                type: 'POST',
-                url: "<?= base_url() ?>/mmk/geticon",
-                cache: false,
-                success: function(msg) {
-                    $("#cardIcon").html(msg);
-                }
-            });
-        })
+                $.ajax({
+                    type: 'POST',
+                    url: "<?= base_url() ?>/mmk/geticon",
+                    cache: false,
+                    success: function(msg) {
+                        $("#cardIcon").html(msg);
+                    }
+                });
+            })
             $("#level").on('change', function() {
                 var level = $("#level").val()
                 $.ajax({
@@ -299,6 +299,80 @@
                 $('#apiid' + idbtn + '').remove()
             })
         })
+    </script>
+    <script>
+        function getsubmenu(a, b) {
+            $.ajax({
+                type: 'POST',
+                url: "<?= base_url() ?>/get/getsubmenu/",
+                data: {
+                    a: a,
+                    b: b
+                },
+                cache: false,
+                success: function(msg) {
+                    $("#modalsubmenu").html(msg)
+                    $('#submenuModal').modal({
+                        backdrop: 'static',
+                        keyboard: true, 
+                        show: true
+                });
+                }
+            });
+        }
+
+        function getview(a) {
+            $.ajax({
+                type: 'POST',
+                url: "<?= base_url() ?>/get/getview/",
+                data: {
+                    a: a,
+                },
+                cache: false,
+                success: function(msg) {
+                    $("#modalview").html(msg)
+                    $('#viewModal').modal('show');
+                }
+            });
+        }
+
+        function addsubmenu(a, b) {
+            $.ajax({
+                type: 'POST',
+                url: "<?= base_url() ?>/get/addsubmenu",
+                data: {
+                    a: a,
+                    b: b
+                },
+                cache: false,
+                success: function(msg) {
+                    $("#modalview").html(msg)
+                    $('#addsubmenuModal').modal({
+                        backdrop: false,
+                        keyboard: true, 
+                        show: true
+                });
+                }
+            });
+        }
+        function btn_addsubmenu(role,menu){
+            var sub_menu_id = $('#select_sub_menu_id').val();
+                if (sub_menu_id != "") {
+                    $.ajax({
+                        url: "<?php echo base_url() ?>admin/role_access_sub_menu/add/" + role,
+                        type: "POST",
+                        data: {
+                            sub_menu_id: sub_menu_id,
+                        },
+                        cache: false,
+                        success: function(msg) {
+                            $('#addsubmenuModal').modal('hide');
+                            $('#submenuModal').modal('hide');
+                            getsubmenu(menu,role)
+                        }
+                    })
+                }
+        }
     </script>
 
 </body>

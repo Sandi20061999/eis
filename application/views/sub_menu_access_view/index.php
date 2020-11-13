@@ -23,8 +23,22 @@
                                     <td><?php echo $r['menu'] . ' | ' . $r['title']; ?></td>
                                     <td>
                                         <?php foreach ($sub_menu_access_view as $m) {
+                                    
+                                            if ($m['type'] == 'card') {
+                                                $title = $m['cardTitle'];
+                                            } elseif ($m['type'] == 'table') {
+                                                $title = $m['tableTitle'];
+                                            } elseif ($m['type'] == 'chart-parent') {
+                                                $title = $m['chartTitle'];
+                                            } elseif ($m['type'] == 'header') {
+                                                $title = $m['headerTitle'];
+                                            } elseif ($m['type'] == 'accordion-table') {
+                                                $title = $m['accordionTableTitle'];
+                                            } else {
+                                                $title = $m['type'];
+                                            }
                                             if ($r['id'] == $m['sub_menu_id']) {
-                                                echo '<a href="' . base_url('admin/sub_menu_access_view/delete/') . $m['id'] . '" class="btn btn-danger btn-xs mb-1 mr-1"><span class="fa fa-trash" title="Hapus Sub Menu"></span></a>' . $m['type'] . '<br>';
+                                                echo '<a href="' . base_url('admin/sub_menu_access_view/delete/') . $m['id'] . '" class="btn btn-danger btn-xs mb-1 mr-1"><span class="fa fa-trash" title="Hapus Sub Menu"></span></a>' . $title . '<br>';
                                             }
                                         } ?>
                                     </td>

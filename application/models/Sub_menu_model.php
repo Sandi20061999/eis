@@ -32,6 +32,13 @@ class Sub_menu_model extends CI_Model
         $this->db->join('menu', 'menu.id = sub_menu.menu_id');
         return $this->db->get('sub_menu')->result_array();
     }
+    function get_all_sub_menu_by_menu_id($id)
+    {
+        $this->db->select('*,sub_menu.id as id');
+        $this->db->join('menu', 'menu.id = sub_menu.menu_id');
+        $this->db->where('menu.id',$id );
+        return $this->db->get('sub_menu')->result_array();
+    }
     function get_all_sub_menu_role($id)
     {
         $this->db->select('*,sub_menu.id as id');

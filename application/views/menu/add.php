@@ -5,7 +5,7 @@
 				<div class="row d-flex justify-content-between">
 					<h4 class="card-title">Data Table</h4>
 				</div>
-				<?php echo form_open('user_menu/add', array("class" => "form-horizontal")); ?>
+				<?php echo form_open('admin/menu/add', array("class" => "form-horizontal")); ?>
 
 				<div class="form-group">
 					<label for="title" class="col-md-4 control-label">Menu</label>

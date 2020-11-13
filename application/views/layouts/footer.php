@@ -9,92 +9,13 @@
 </div>
 </div>
 
-<script src="<?= base_url() ?>/assets/plugins/common/common.min.js"></script>
-<script src="<?= base_url() ?>/assets/js/custom.min.js"></script>
 <script src="<?= base_url() ?>/assets/js/settings.js"></script>
-<script src="<?= base_url() ?>/assets/js/gleek.js"></script>
-<script src="<?= base_url() ?>/assets/js/styleSwitcher.js"></script>
-<script src="<?= base_url() ?>/assets/plugins/highlightjs/highlight.pack.min.js"></script>
+<script src="<?= base_url() ?>/assets/js/custom.min.js"></script>
 
-<script src="<?= base_url() ?>/assets/plugins/tables/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() ?>/assets/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
-<script src="<?= base_url() ?>/assets/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
-<script src="<?= base_url() ?>/assets/plugins/chart.js/Chart.bundle.min.js"></script>
+
 
 <script>
     hljs.initHighlightingOnLoad();
-</script>
-
-<script>
-    var config = {
-        type: 'bar',
-        data: {
-            labels: ["20201", "20202", "20191", "20192", ],
-            datasets: [{
-                fill: false,
-                label: "Label 1",
-                backgroundColor: "#f0ff0f",
-                borderColor: "#f0ff0f",
-                borderWidth: 1,
-                data: [0, 3, 2, 4, ]
-            }, {
-                fill: false,
-                label: "Label 2",
-                backgroundColor: "#f00fa0",
-                borderColor: "#f00fa0",
-                borderWidth: 1,
-                data: [9, 7, 2, 5, ]
-            }, ]
-        },
-        options: {
-            responsive: true,
-            title: {
-                display: true,
-                text: "Chart.js Line Chart"
-            },
-            tooltips: {
-                mode: "index",
-                intersect: false,
-            },
-            hover: {
-                mode: "nearest",
-                intersect: true,
-            },
-            "animation": {
-                "duration": 0,
-                "onComplete": function() {
-                    var chartInstance = this.chart,
-                        ctx = chartInstance.ctx;
-
-                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'bottom';
-
-
-                }
-            },
-            scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: "kdta"
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: "jumlah"
-                    }
-                }]
-            }
-        }
-    }
-    window.onload = function() {
-        var ctx = document.getElementById('canvas').getContext('2d');
-        window.myLine = new Chart(ctx, config);
-    };
 </script>
 
 <script>
@@ -122,14 +43,15 @@
 <script src="<?= base_url() ?>/assets//plugins/flot/js/jquery.flot.spline.js"></script>
 <script src="<?= base_url() ?>/assets//plugins/flot/js/jquery.flot.init.js"></script>
 
-<script>
-    <?php
-    // $i = 0;
-    foreach ($javascript as $j) {
+
+<?php
+// $i = 0;
+if ($ngentot != '') {
+    foreach ($ngentot as $j) {
         echo $j;
-        // $i++;
-    } ?>
-</script>
+    }
+} ?>
+
 <script>
     $.ajax({
         type: 'POST',

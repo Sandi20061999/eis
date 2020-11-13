@@ -19,7 +19,7 @@
 										$title = $view['cardTitle'];
 									} elseif ($view['type'] == 'table') {
 										$title = $view['tableTitle'];
-									} elseif ($view['type'] == 'chart') {
+									} elseif ($view['type'] == 'chart-parent') {
 										$title = $view['chartTitle'];
 									} elseif ($view['type'] == 'header') {
 										$title = $view['headerTitle'];

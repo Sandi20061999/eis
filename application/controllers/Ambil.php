@@ -11,16 +11,35 @@ class Ambil extends CI_Controller
     {
         parent::__construct();
     }
+    function ambilcard(){
+        $kunnn = $_POST['param'];
+        $okkk = explode('|',$kunnn);
+        if(strlen($okkk[0]) == 5){
+        $detail = '<p class="text-white mb-0"> Tahun '.substr($okkk[0],0,4).' Semester '.substr($okkk[0],4).' </p>';
+        }elseif(strlen($okkk[0]) == 4){
+            $detail = '<p class="text-white mb-0"> Tahun '.$okkk[0].'</p>';
+
+        }elseif((strlen($okkk[0]) == 9)){
+            $detail = '<p class="text-white mb-0"> Tahun Ajaran'.$okkk[0].'</p>';
+        }else{
+            $detail = '<p class="text-white mb-0"> Tahun '.$okkk[0].'</p>';
+        }
+        $dapat = genggek($okkk[0],$okkk[1]);
+        $modal = table_view($dapat['data']);
+        $result = ["nilai" => $dapat['count'] ,"detail" => $detail,"modal"=>$modal];
+        echo json_encode($result,true);
+        
+    }
     function api()
     {
-        $ambil = $this->db->get('user_api')->result_array();
+        $ambil = $this->db->get_where('api', array('id >=' => 142, 'id <=' => 204))->result_array();
         foreach ($ambil as $a) {
             $isi = $this->_api($a['select'], $a['view_name'], $a['where'], $a['limit'], $a['order_by']);
             if ($isi == null) {
             } else {
                 $this->load->database();
                 $up = $this->db->where('id', $a['id'])
-                    ->update('user_api', array('jsonFile' => $isi));
+                    ->update('api', array('jsonFile' => $isi));
                 if ($up) {
                     echo "id " . $a['id'] . " berhasil isi";
                     echo "<br>";

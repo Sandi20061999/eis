@@ -3,10 +3,9 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="row d-flex justify-content-between">
-					<h4 class="card-title">Data Table</h4>
+					<h4 class="card-title">Tambah Sub Menu</h4>
 				</div>
 				<?php echo form_open('admin/role_access_sub_menu/add/' . $this->uri->segment(4)); ?>
-
 				<div class="form-group">
 					<div class="col-md-6">
 						<label for="sub_menu_id" class="control-label"><span class="text-danger">*</span>User Sub Menu</label>

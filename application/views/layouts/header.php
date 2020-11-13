@@ -9,8 +9,18 @@
     <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url() ?>/assets/images/Logo-darmajaya.png">
     <link href="<?= base_url() ?>/assets/css/style.css" rel="stylesheet">
     <link href="<?= base_url() ?>/assets/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="https://chartjs-plugin-datalabels.netlify.app/chartjs-plugin-datalabels.js"></script>
+    <script src="<?= base_url() ?>/assets/daricdn/npmchartjs.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/common/common.min.js"></script>
+    <script src="<?= base_url() ?>/assets/js/gleek.js"></script>
+    <script src="<?= base_url() ?>/assets/js/styleSwitcher.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/highlightjs/highlight.pack.min.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/tables/js/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+    
+    <script src="<?= base_url() ?>/assets/plugins/chart.js/Chart.bundle.min.js"></script>
+
+    <script src="<?= base_url() ?>/assets/daricdn/chartjslabel.js"></script>
     <style type="text/css">
         /* Chart.js */
         @keyframes chartjs-render-animation {

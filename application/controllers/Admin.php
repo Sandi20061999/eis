@@ -544,12 +544,13 @@ class Admin extends CI_Controller
 
                     $this->form_validation->set_rules('view_id', 'View Id', 'required');
                     $this->form_validation->set_rules('is_active', 'Is Active', 'required');
-
+                    $by =  $this->db->query("SELECT * FROM `sub_menu_access_view` WHERE sub_menu_id = " . $sub_menu_id . " ORDER BY `sub_menu_access_view`.`by` DESC LIMIT 1")->row_array();
                     if ($this->form_validation->run()) {
                         $params = array(
                             'sub_menu_id' => $sub_menu_id,
                             'view_id' => $this->input->post('view_id'),
                             'is_active' => $this->input->post('is_active'),
+                            'by' => $by['by']+1,
                         );
 
                         $user_sub_menu_access_view_id = $this->Sub_menu_access_view_model->add_sub_menu_access_view($params);
@@ -737,9 +738,9 @@ class Admin extends CI_Controller
                     if ($this->input->post('type') == 'card') {
                         // {"filter":"ta","where":{"ta":"2020\/2021","id_jurusan":"0105"},"by":""}
                         if ($this->input->post('level') == 'kaprodi') {
-                            $ff = ["filter" => $this->input->post('filter'), "where" => [$this->input->post('filter')=>$this->input->post('fvalue'),"id_jurusan" => $this->input->post('id_jurusan')],"by"=>$this->input->post('by')];
+                            $ff = ["filter" => $this->input->post('filter'), "where" => [$this->input->post('filter') => $this->input->post('fvalue'), "id_jurusan" => $this->input->post('id_jurusan')], "by" => $this->input->post('by')];
                         } else {
-                            $ff = ["filter" => $this->input->post('filter'), "where" => [$this->input->post('filter')=>$this->input->post('fvalue')],"by"=>$this->input->post('by')];
+                            $ff = ["filter" => $this->input->post('filter'), "where" => [$this->input->post('filter') => $this->input->post('fvalue')], "by" => $this->input->post('by')];
                         }
                         $filter = json_encode($ff, true);
                         $params = array(
@@ -755,9 +756,9 @@ class Admin extends CI_Controller
                     } elseif ($this->input->post('type') == 'chart') {
                         // {"filter":"kdta","where":{"id_jurusan":"0105"},"by":""}
                         if ($this->input->post('level') == 'kaprodi') {
-                            $ff = ["filter" => $this->input->post('filter'), "where" => ["id_jurusan" => $this->input->post('id_jurusan')],"by"=>$this->input->post('by')];
+                            $ff = ["filter" => $this->input->post('filter'), "where" => ["id_jurusan" => $this->input->post('id_jurusan')], "by" => $this->input->post('by')];
                         } else {
-                            $ff = ["filter" => $this->input->post('filter'), "where" => [],"by"=>$this->input->post('by')];
+                            $ff = ["filter" => $this->input->post('filter'), "where" => [], "by" => $this->input->post('by')];
                         }
                         $filter = json_encode($ff, true);
                         $chartchildern = json_encode(array_map('intval', $this->input->post('api_id')), true);
@@ -891,7 +892,8 @@ class Admin extends CI_Controller
                 break;
         }
     }
-    function generateRandomString($length = 10) {
+    function generateRandomString($length = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';

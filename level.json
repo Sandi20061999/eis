@@ -7,29 +7,109 @@
           "TA",
           "Tahun Ajaran",
           "jenjang",
-          "kdta"
+          "kdta",
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
         ],
         "chart": [
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
           "kdta",
-          "ta"
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
         ],
-        
         "table": [
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
           "kdta",
-          "ta"
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
         ],
         "accordionTable": [
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
           "kdta",
-          "ta"
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
         ]
       },
       "required": {
         "card": [
           "id_jurusan"
         ],
+        "chart": []
+      }
+    },
+    "SDM": {
+      "filter": {
+        "card": [
+          "NmUnitKerja",
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
+          "kdta",
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
+        ],
         "chart": [
-          
+          "NmUnitKerja",
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
+          "kdta",
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
+        ],
+        "table": [
+          "NmUnitKerja",
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
+          "kdta",
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
+        ],
+        "accordionTable": [
+          "NmUnitKerja",
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
+          "kdta",
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
         ]
+      },
+      "required": {
+        "card": [
+          "id_jurusan"
+        ],
+        "chart": []
       }
     },
     "keuangan": {
@@ -45,7 +125,6 @@
           "kdta",
           "ta"
         ],
-        
         "table": [
           "kdta",
           "ta"
@@ -55,18 +134,56 @@
           "ta"
         ]
       }
+    },
+    "dekan": {
+      "filter": {
+        "card": [
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
+          "kdta",
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
+        ],
+        "chart": [
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
+          "kdta",
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
+        ],
+        "table": [
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
+          "kdta",
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
+        ],
+        "accordionTable": [
+          "ta",
+          "TA",
+          "Tahun Ajaran",
+          "jenjang",
+          "kdta",
+          "Tahun Lulus",
+          "angkatan",
+          "ipk",
+          "Tahun"
+        ]
+      },
+      "wakil_rektor": [],
+      "rektor": []
     }
-      
-      
-    ,
-    "dekan": [
-      
-    ],
-    "wakil_rektor": [
-      
-    ],
-    "rektor": [
-      
-    ]
   }
 }
