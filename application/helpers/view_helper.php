@@ -1,91 +1,16 @@
 <?php
-
-// format key ['x' => 'bilangan', 'y' => array('0'=>'',...),'color'=>array('0'=>'',..)]
-// format data ['0'=>'','1'=>'',...]
-// type = 'morris-bar-chart','extra-area-chart','morris-area-chart','morris-area-chart0','morris-donut-chart','morris-line-chart'
-// type = morris-donut-chart maka format key ['x'=>label,'y'=>array('0'=>'value')]
-function morris_chart($key, $data, $type, $n)
+function table_view($dat, $exc = [])
 {
-    $x = $key['x'];
-    $ar = array();
-    foreach ($data as $t) {
-        $string = "{" . $x . ":'" . $t[0] . "'";
-        $isi = '';
-        for ($co = 0; $co < count($key['y']); $co++) {
-            $isi .= "," . $key['y'][$co] . ":" . $t[$co + 1];
-        }
-        $fix = $string . $isi . "}";
-        array_push($ar, $fix);
-    }
-    // Y
-    // $ce = 0;
-    $cy = count($key['y']) - 1;
-    $yku = '';
-    // foreach ($key['y'] as $ky) {
-    for ($ce = 0; $ce < count($key['y']); $ce++) {
-        if ($cy == $ce) {
-            $yku .= "'" . $key['y'][$ce] . "'";
-        } else {
-            $yku .= "'" . $key['y'][$ce] . "',";
-        }
-        // $ce++;
-    }
-    $y = "[" . $yku . "]";
-    // Warna
-    // $cc = 0;
-    $cco = count($key['color']) - 1;
-    $cku = '';
-    for ($cc = 0; $cc < count($key['color']); $cc++) {
-        // foreach ($key['color'] as $kyq) {
-        if ($cco == $cc) {
-            $cku .= "'" . $key['color'][$cc] . "'";
-        } else {
-            $cku .= "'" . $key['color'][$cc] . "',";
-        }
-        // $cc++;
-    }
-    $color = "[" . $cku . "]";
-
-    $isi1 = implode(",", $ar);
-    $view =  "[" . $isi1 . "]";
-    // var_dump($y);
-    // die;
-    if ($type == 'morris-bar-chart') {
-        return "Morris.Bar({element: 'morris-bar-chart" . $n . "',data:" . $view . ",xkey: '" . $x . "',ykeys: " . $y . ",labels: " . $y . ",barColors: " . $color . ",hideHover: 'auto',gridLineColor: 'transparent',resize: true});";
-    }
-    if ($type == 'extra-area-chart') {
-        return "Morris.Area({element: 'extra-area-chart" . $n . "',data: " . $view . ",lineColors: " . $color . ",xkey: '" . $x . "',ykeys: " . $y . ",labels: " . $y . ",pointSize: 0,lineWidth: 0,resize: true,fillOpacity: 0.8,behaveLikeLine: true,gridLineColor: 'transparent',hideHover: 'auto'});";
-    }
-    if ($type == 'morris-area-chart') {
-        return "Morris.Area({element: 'morris-area-chart" . $n . "',data:" . $view . ",xkey: '" . $x . "',ykeys: " . $y . ",labels: " . $y . ",pointSize: 3,fillOpacity: 0,pointStrokeColors: " . $color . ",behaveLikeLine: true,gridLineColor: 'transparent',lineWidth: 3,hideHover: 'auto',lineColors: ['#7571F9', '#4d7cff', '#9097c4'],resize: true});";
-    }
-    if ($type == 'morris-donut-chart') {
-        return "Morris.Donut({element: 'morris-donut-chart" . $n . "',data: " . $view . ",resize: true,colors: " . $color . "});";
-    }
-    if ($type == 'morris-line-chart') {
-        return "let line = new Morris.Line({element: 'morris-line-chart" . $n . "',resize: true,data: " . $view . ",xkey: '" . $x . "',ykeys: " . $y . ",labels: " . $y . ",gridLineColor: 'transparent',lineColors: " . $color . ",lineWidth: 1,hideHover: 'auto',});";
-    }
-}
-
-// format thn ajaran ['TA'=>array('2017/2018','2018/2019','2019/2020')]
-function accordion($Jurusan, $TA)
-{
-}
-
-function table_view($dat)
-{
-    $temp = '<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Data Table</h4>
+    $temp = '
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                             <tr>';
     foreach ($dat[0] as $i => $v) {
         if ($i != 'ct') {
-            $temp .= '<th>' . field_as($i) . '</th>';
+            if (!in_array($i, $exc)) {
+                $temp .= '<th>' . field_as($i) . '</th>';
+            }
         }
     }
     $temp .=
@@ -96,7 +21,9 @@ function table_view($dat)
         $temp .= '<tr>';
         foreach ($dat[0] as $i => $v) {
             if ($i != 'ct') {
-                $temp .= '<td>' . $t[$i] . '</td>';
+                if (!in_array($i, $exc)) {
+                    $temp .= '<td>' . $t[$i] . '</td>';
+                }
             }
         }
         $temp .= '</tr>';
@@ -106,63 +33,258 @@ function table_view($dat)
                             <tr>';
     foreach ($dat[0] as $i => $v) {
         if ($i != 'ct') {
-            $temp .= '<th>' . field_as($i) . '</th>';
+            if (!in_array($i, $exc)) {
+                $temp .= '<th>' . field_as($i) . '</th>';
+            }
         }
     }
     $temp .= '</tr>
                         </tfoot>
                     </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>';
+                </div>';
     return $temp;
 }
-function accordion_view($name, $dat, $by)
+function accordion_view($name, $dat, $by, $id)
 {
-    $temp = '<div class="row">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">' . $name . '</h4>
-                <p class="text-muted"><code></code>
-                </p>
-                <div id="accordion-one" class="accordion">';
+    $temp = '
+                <div class="col-md-12 my-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="accordion-one' . $id . '" class="accordion">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOneTop' . $id . '" aria-expanded="true" aria-controls="collapseOne"><i class="fa" aria-hidden="true"></i>' . $name . ' </h5>
+                                    </div>
+                                <div id="collapseOneTop' . $id . '" class="collapse" data-parent="#accordion-one' . $id . '">
+                            <div class="card-body">';
     $dump = [];
     $i = 0;
     foreach ($dat as $index => $x) {
         $dump[$x[$by]][$index] = $x;
     }
+    ksort($dump);
     foreach ($dump as $index => $x) {
-        $temp .= '<div class="card">
+                    $temp .= ' <div id="accordion-one' . $id . $i . '" class="accordion">
+                            <div class="card">
                         <div class="card-header">
-                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne' . $i . '" aria-expanded="true" aria-controls="collapseOne"><i class="fa" aria-hidden="true"></i>' .
+                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne' . $id . $i . '" aria-expanded="true" aria-controls="collapseOne"><i class="fa" aria-hidden="true"></i>' .
             $index . '</h5>
                         </div>
-                        <div id="collapseOne' . $i . '" class="collapse" data-parent="#accordion-one">
-                            <div class="card-body">' . table_view(array_values($x)) . '</div>
+                        <div id="collapseOne' . $id . $i . '" class="collapse" data-parent="#accordion-one' . $id . $i . '">
+                            <div class="card-body">' . table_view(array_values($x), ['id_jurusan', 'kelurahan', 'nm_kecamatan', 'nm_kabupaten', 'nm_propinsi', 'nm_semester']) . '</div>
                         </div>
+                    </div>
                     </div>';
+
         $i++;
     }
-    // for ($i = 0; $i < count($dump); $i++) {
-    //     $temp .= '<div class="card">
-    //                     <div class="card-header">
-    //                         <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne' . $i . '" aria-expanded="true" aria-controls="collapseOne"><i class="fa" aria-hidden="true"></i>' .
-    //         $dump['2012/2013'][1]['ta'] . '</h5>
-    //                     </div>
-    //                     <div id="collapseOne' . $i . '" class="collapse" data-parent="#accordion-one">
-    //                         <div class="card-body"></div>
-    //                     </div>
-    //                 </div>';
-    // }
-
 
     $temp .= '</div>
+            </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>';
+    return $temp;
+} 
+function card($data,$u,$filter)
+{
+    
+    //     'title' => 'Judul',
+    //     'nilai' => '100',
+    //     'detail' => 'anyyy',
+    //
+    //     'width' => '1-12',
+    //     'icon' => 'fa-user',
+    // ]
+    asort($filter);
+    if(substr($data['nilai'],0,2) == 'Rp'){
+        $jenis = 'rp';
+    }else {
+        $jenis = 'nl';
+    }
+    $default = ['title' => 'Judul Tidak Di Set', 'color' => '#3f48cc', 'width' => '12', 'nilai' => 'Tidak Ada Nilai', 'icon' => 'fa-window-close'];
+    $temp = ' <div class="card" style="background-color:'.(isset($data['color']) ? $data['color'] : $default['color']) . '" ;> <div class="col"> <div class="dropdown custom-dropdown float-right mr-2 mt-2"> <div data-toggle="dropdown"><i class="fa fa-ellipsis-v text-white"></i> </div> <div class="dropdown-menu dropdown-menu-right">';foreach($filter as $link) { $asu = explode('|',$link); $temp .= '<a onclick="dropdowncard'.$asu[0].$jenis.'()" class="dropdown-item changetype">'.$asu[0].'</a>';} $temp .='</div> </div> </div> <a type="button" data-toggle="modal" data-target="#inimodal'.$u.'"> <div class="card-body"> <h3 class="card-title text-white">' . (isset($data['title']) ? $data['title'] : $default['title']) . '</h3> <div class="d-inline-block"> <h2 class="text-white"><div id="nilai'.$u.'">' . (isset($data['nilai']) ? $data['nilai'] : $default['nilai']) . '</div></h2>'; if (isset($data['detail'])) { $temp .= '<div id="detail'.$u.'"><p class="text-white mb-0">' . $data['detail'] . '</p></div>'; } $temp .= '</div> <span class="float-right display-5 opacity-5"><i class="fa text-white ' . (isset($data['icon']) ? $data['icon'] : $default['icon']) . '"></i></span> </div> </a></div>';
+
+    $cardtofoot = "
+    <script>
+    var uyyy".$u." = '".$temp."'
+    $(document).ready(function() {
+        $('#cardcukkks".$u."').html(uyyy".$u.");
+    });";
+
+    foreach($filter as $y){
+    $asu = explode('|',$y);
+    $cardtofoot .= "
+    function dropdowncard".$asu[0].$jenis."(){
+        $.ajax({
+        type: 'POST',
+        url: '".base_url()."Ambil/ambilcard/',
+        data: { param: '".$y."' },
+        cache: false,
+        success: function(msg) {
+            var ui = JSON.parse(msg)
+            $('#nilai".$u."').html(ui.nilai);
+            $('#detail".$u."').html(ui.detail);
+            $('#isimodal".$u."').html(ui.modal);
+        }
+    });
+}
+    ";
+    }
+        $cardtofoot .= "</script>";
+        return $cardtofoot;
+
+}
+function tab($data)
+{
+    //buatin tag untuk chart 
+
+    //aku pindah di dungsi baru
+    //
+    $temp = '<div class="default-tab">
+    <ul class="nav nav-tabs mb-3" role="tablist">';
+    $i = 0;
+    foreach ($data as $index => $val) {
+        if ($i == 0) {
+            $temp .= '<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#' . str_replace(' ', '_', $index) . '">' . $index . '</a>
+        </li>';
+        } else {
+            $temp .= '<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#' . str_replace(' ', '_', $index) . '">' . $index . '</a>
+        </li>';
+        }
+        $i++;
+    }
+    $i = 0;
+    $temp .= '</ul>
+    <div class="tab-content">';
+    foreach ($data as $index => $val) {
+        if ($i == 0) {
+            $temp .= '<div class="tab-pane fade show active" id="' . str_replace(' ', '_', $index) . '" role="tabpanel">
+            <div class="p-t-15">
+                <h4>This is ' . $index . ' title</h4> <div class="row">';
+            foreach ($val as $content) {
+                if (isset($content['color'])) {
+                    $temp .= tagchart($content['color'], $content['lable'], $content['id']);
+                } else {
+                    $temp .= $content;
+                }
+            }
+            $temp .= '</div></div>
+        </div>';
+        } else {
+            $temp .= ' <div class="tab-pane fade" id="' . str_replace(' ', '_', $index) . '">
+        <div class="p-t-15">
+          <h4>This is ' . $index . ' title</h4><div class="row">';
+            foreach ($val as $content) {
+                if (isset($content['color'])) {
+                    $temp .= tagchart($content['color'], $content['lable'], $content['id']);
+                } else {
+                    $temp .= $content;
+                }
+            }
+            $temp .= '</div></div>
+    </div>';
+        }
+        $i++;
+    }
+    $i = 0;
+    $temp .= '  </div>
+    </div>';
+    return $temp;
+}
+function tagchart($color, $lable, $id)
+{
+    $tagchart = '<div class="flex-d flex-direction-row"></div>';
+    for ($i = 0; count($color) > $i; $i++) {
+
+        $tagchart .= '<span class="badge" style="width: 10;background-color: ' . $color[$i] . '">-</span> ' . $lable[$i] . '  ';
+    }
+    $tagchart .= '<h4 class=" card-title"></h4>
+    <div id="' . $id . '"></div>';
+    return $tagchart;
+}
+
+function headerAtas($title, $size)
+{
+    return '<div class="col-md-6">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+            
+                <' . $size . ' class="card-title my-auto">' . $title . '</' . $size . '>
             </div>
         </div>
     </div>
 </div>';
-    return $temp;
+}
+function chart($element, $type, $data, $options = null, $width = 12)
+{
+    $u = rand(0,1000);
+    $arr = [
+        'options' => $options
+    ];
+    $toString = json_encode($arr, TRUE);
+    return '<div class="col-md-' . $width . '">
+    <div class="card">
+    <div class="card-body">
+    <div class="col">
+                                        <div class="dropdown custom-dropdown float-right">
+                                            <div data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i>
+                                            </div>
+                                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item changetype" id="changeBar'.$u.'" >Bar Chart</a> <a class="dropdown-item changetype"  id="changeLine'.$u.'">Line Chart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+    <canvas id="' . $u . '"></canvas>
+    </div>
+    </div>
+    </div>
+        <script>
+        var asubanget'.$u.' = {"type":"'.$type.'","data":'.json_encode($data,true).',"options":' .json_encode($options,true).'}
+        ctx'.$u.' = document.getElementById("' . $u . '").getContext("2d")
+        var chartAsu'.$u.'
+            chartAsu'.$u.' = new Chart(ctx'.$u.',asubanget'.$u.');  
+        $("#changeBar'.$u.'").click(function() {
+            chartAsu'.$u.'.destroy();
+            asubanget'.$u.'.type = "bar"
+            chartAsu'.$u.' = new Chart(ctx'.$u.',asubanget'.$u.');  
+          });
+        $("#changeLine'.$u.'").click(function() {
+            chartAsu'.$u.'.destroy();
+            asubanget'.$u.'.type = "line"
+            chartAsu'.$u.' = new Chart(ctx'.$u.',asubanget'.$u.');  
+          });
+        </script>';
+}
+
+function rupiah($angka){
+	
+	$hasil_rupiah = "Rp " . number_format($angka,2,',','.');
+	return $hasil_rupiah;
+ 
+}   
+function modal($dat,$key,$name){
+    $temp = '<div class="modal fade" id="inimodal'.$key.'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Detail '.$name.'</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"> <div id="isimodal'.$key.'">';
+        
+        $temp .= table_view($dat);
+          
+        $temp .='</div></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>';
+  return $temp;
 }

@@ -1,0 +1,26 @@
+type: 
+- header            : - value
+
+- small card        : - label
+                    : - value
+                    : - icon
+                    : - keterangan
+
+- grafik            : - donout          : - 
+                    : - visit
+                    : - area chart
+                    : - line chart
+                    : - bar chart
+
+- accordion         : - 
+- table             
+
+
+
+LIBRARY TABEL  http://tablefilter.free.fr/
+
+
+- perbandingan grafik antar ps mirip google trand // buat helper
+- buat tabel filter
+- remove line di grafik
+- tambah line di grafik sesuai hak akses

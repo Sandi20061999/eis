@@ -133,11 +133,13 @@ class User_menu extends CI_Controller
         $this->form_validation->set_rules('is_active', 'Is Active', 'required');
 
         if ($this->form_validation->run()) {
+            $str = $this->input->post('url');
+            $result = hash("sha256", $str);
             $params = array(
                 'menu_id' => $menu_id,
                 'is_active' => $this->input->post('is_active'),
                 'title' => $this->input->post('title'),
-                'url' => $this->input->post('url'),
+                'url' => 'core_system/index/'.$result,
                 'icon' => $this->input->post('icon'),
             );
 
@@ -274,7 +276,7 @@ class User_menu extends CI_Controller
                 );
 
                 $this->User_sub_menu_access_view_model->update_user_sub_menu_access_view($id, $params);
-                redirect('user_menu/index_access/' . $menu_id . '/'. $sub_menu_id);
+                redirect('user_menu/index_access/' . $menu_id . '/' . $sub_menu_id);
             } else {
 
                 $this->load->model('User_view_model');

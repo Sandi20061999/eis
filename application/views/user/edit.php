@@ -43,13 +43,7 @@
 						<span class="text-danger"><?php echo form_error('email'); ?></span>
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="image" class="col-md-4 control-label">Image</label>
-					<div class="col-md-8">
-						<input type="text" name="image" value="<?php echo ($this->input->post('image') ? $this->input->post('image') : $user['image']); ?>" class="form-control" id="image" />
-						<span class="text-danger"><?php echo form_error('image'); ?></span>
-					</div>
-				</div>
+
 				<div class="form-group">
 					<label for="is_active" class="col-md-4 control-label">Is Active</label>
 					<div class="col-md-8">

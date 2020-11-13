@@ -31,7 +31,7 @@ class Auth extends CI_Controller
         $password = $this->input->post('password');
 
         $user = $this->db->select('user.id AS `user_id`,email,role,role_id,password,is_active')
-            ->join('user_role', 'user_role.id=user.role_id')
+            ->join('role', 'role.id=user.role_id')
             ->get_where('user', ['email' => $email])->row_array();
         // var_dump($user);
         // die;
@@ -41,17 +41,19 @@ class Auth extends CI_Controller
             if ($user['is_active'] == 1) {
                 // cek password
                 if (password_verify($password, $user['password'])) {
+                    $awal = $this->db->join('sub_menu', 'sub_menu.id=role_access_sub_menu.sub_menu_id')
+                        ->get_where('role_access_sub_menu', array('role_id' => $user['role_id'], 'sub_menu.by' => 1, 'is_active' => 1))->row_array();
                     $data = [
                         'email' => $user['email'],
+                        'role_id' => $user['role_id'],
+                        'user_id' => $user['user_id'],
                         'role' => $user['role'],
-                        'user_id' => $user['user_id']
                     ];
                     $this->session->set_userdata($data);
-                    if ($user['role_id'] == 1) {
-                        redirect('admin');
+                    if ($user['role'] == 'Administrator') {
+                        redirect('dashboard');
                     } else {
-                        redirect('dashboard
-                        ');
+                        redirect($awal['url']);
                     }
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong password!</div>');

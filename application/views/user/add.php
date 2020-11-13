@@ -5,7 +5,7 @@
 				<div class="row d-flex justify-content-between">
 					<h4 class="card-title">Data Table</h4>
 				</div>
-				<?php echo form_open('user/add', array("class" => "form-horizontal")); ?>
+				<?php echo form_open('admin/user/add', array("class" => "form-horizontal")); ?>
 				<div class="form-group">
 					<label for="role_id" class="col-md-4 control-label">User Role</label>
 					<div class="col-md-8">

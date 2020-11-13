@@ -27,9 +27,9 @@ class User_sub_menu_model extends CI_Model
         return $this->db->get_where('user_sub_menu',array('menu_id' => $menu_id))->result_array();
     }
 
-    function get_all_user_sub_menu_senior($user_id)
+    function get_all_user_sub_menu_senior()
     {
-        return $this->db->get_where('user_sub_menu',array('user_id' => $user_id))->result_array();
+        return $this->db->get('user_sub_menu')->result_array();
     }
         
     /*
