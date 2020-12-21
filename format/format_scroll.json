@@ -1,0 +1,188 @@
+{
+  "type": "scroll",
+  "name": "Jumlah MHS Mahasiswa Konversi FILKOM",
+  "data": [
+    {
+      "type": "card",
+      "name": "Card Mahasiswa Konversi TI",
+      "title": "Jumlah Mahasiswa Konversi TI",
+      "width": 4,
+      "icon": "fa fa-users",
+      "color": "#3f48cc",
+      "detail": "Agkatan 2020",
+      "api_id": "14",
+      "withDetail": {
+        "api_id": 20,
+        "selector": "npm"
+      },
+      "data": {
+        "table": "api_eis_prodi_mahasiswa_konversi",
+        "where": {
+          "id_jurusan": "0101"
+        },
+        "default_where": {
+          "angkatan": "2020"
+        },
+        "default_value": "2020",
+        "groupby": "angkatan",
+        "count": "row"
+      }
+    },
+    {
+      "type": "card",
+      "name": "Card Mahasiswa Konversi TK",
+      "title": "Jumlah Mahasiswa Konversi TK",
+      "width": 4,
+      "icon": "fa fa-users",
+      "color": "#3f48cc",
+      "detail": "Agkatan 2020",
+      "api_id": "14",
+      "withDetail": {
+        "api_id": 20,
+        "selector": "npm"
+      },
+      "data": {
+        "table": "api_eis_prodi_mahasiswa_konversi",
+        "where": {
+          "id_jurusan": "0102"
+        },
+        "default_where": {
+          "angkatan": "2020"
+        },
+        "default_value": "2020",
+        "groupby": "angkatan",
+        "count": "row"
+      }
+    },
+    {
+      "type": "card",
+      "name": "Card Mahasiswa Konversi MI",
+      "title": "Jumlah Mahasiswa Konversi MI",
+      "width": 4,
+      "icon": "fa fa-users",
+      "color": "#3f48cc",
+      "detail": "Agkatan 2020",
+      "api_id": "14",
+      "withDetail": {
+        "api_id": 20,
+        "selector": "npm"
+      },
+      "data": {
+        "table": "api_eis_prodi_mahasiswa_konversi",
+        "where": {
+          "id_jurusan": "0103"
+        },
+        "default_where": {
+          "angkatan": "2020"
+        },
+        "default_value": "2020",
+        "groupby": "angkatan",
+        "count": "row"
+      }
+    },
+    {
+      "type": "card",
+      "name": "Card Mahasiswa Konversi SI",
+      "title": "Jumlah Mahasiswa Konversi SI",
+      "width": 4,
+      "icon": "fa fa-users",
+      "color": "#3f48cc",
+      "detail": "Agkatan 2020",
+      "api_id": "14",
+      "withDetail": {
+        "api_id": 20,
+        "selector": "npm"
+      },
+      "data": {
+        "table": "api_eis_prodi_mahasiswa_konversi",
+        "where": {
+          "id_jurusan": "0105"
+        },
+        "default_where": {
+          "angkatan": "2020"
+        },
+        "default_value": "2020",
+        "groupby": "angkatan",
+        "count": "row"
+      }
+    },
+    {
+      "type": "card",
+      "name": "Card Mahasiswa Konversi SK",
+      "title": "Jumlah Mahasiswa Konversi SK",
+      "width": 4,
+      "icon": "fa fa-users",
+      "color": "#3f48cc",
+      "detail": "Agkatan 2020",
+      "api_id": "14",
+      "withDetail": {
+        "api_id": 20,
+        "selector": "npm"
+      },
+      "data": {
+        "table": "api_eis_prodi_mahasiswa_konversi",
+        "where": {
+          "id_jurusan": "0106"
+        },
+        "default_where": {
+          "angkatan": "2020"
+        },
+        "default_value": "2020",
+        "groupby": "angkatan",
+        "count": "row"
+      }
+    },
+    {
+      "type": "card",
+      "name": "Card Mahasiswa Konversi DKV",
+      "title": "Jumlah Mahasiswa Konversi DKV",
+      "width": 4,
+      "icon": "fa fa-users",
+      "color": "#3f48cc",
+      "detail": "Agkatan 2020",
+      "api_id": "14",
+      "withDetail": {
+        "api_id": 20,
+        "selector": "npm"
+      },
+      "data": {
+        "table": "api_eis_prodi_mahasiswa_konversi",
+        "where": {
+          "id_jurusan": "0107"
+        },
+        "default_where": {
+          "angkatan": "2020"
+        },
+        "default_value": "2020",
+        "groupby": "angkatan",
+        "count": "row"
+      }
+    },
+    {
+      "type": "card",
+      "name": "Card Mahasiswa Konversi MTI",
+      "title": "Jumlah Mahasiswa Konversi MTI",
+      "width": 4,
+      "icon": "fa fa-users",
+      "color": "#3f48cc",
+      "detail": "Agkatan 2020",
+      "api_id": "14",
+      "withDetail": {
+        "api_id": 20,
+        "selector": "npm"
+      },
+      "data": {
+        "table": "api_eis_prodi_mahasiswa_konversi",
+        "where": {
+          "id_jurusan": "0121"
+        },
+        "default_where": {
+          "angkatan": "2020"
+        },
+        "default_value": "2020",
+        "groupby": "angkatan",
+        "count": "row"
+      }
+    }
+  ]
+}
